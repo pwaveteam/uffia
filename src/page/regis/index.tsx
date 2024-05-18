@@ -1,5 +1,5 @@
 import {lazy, Suspense} from "react";
-import {Routes, Route, useNavigate} from 'react-router-dom'
+import {Routes, Route} from 'react-router-dom'
 import Styles from "./Styles";
 
 const Index = () => {
