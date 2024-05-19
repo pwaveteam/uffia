@@ -73,6 +73,27 @@ const Styles = {
         padding-bottom: 1rem;
       }
     }
+  `,
+  ButtonWrap: styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1rem;
+    >button {
+      min-width: 10rem;
+      flex: 1;
+      padding: .5rem 1rem;
+      color: white;
+      border: none;
+      border-radius: .5rem;
+      &:nth-child(1) {
+        background-color: #333333;
+      }
+      &:nth-child(2) {
+        background-color: #99210e;
+        
+      }
+    }
   `
 }
 

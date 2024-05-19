@@ -63,6 +63,8 @@ const Styles = {
     flex: 1;
     background-color: #fff;
     border-radius: 1rem;
+    height: calc(100vh - 20rem);
+    overflow-y: scroll;
     padding: .5rem 2rem 2rem;
   `
 }

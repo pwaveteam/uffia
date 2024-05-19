@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import SurveyAction from "../../../store/action/survey";
 import Styles from "../Styles";
@@ -6,8 +6,10 @@ import Styles from "../Styles";
 const ConfirmSurvey = () => {
 
   const {seq} = useParams()
+  const navigate = useNavigate()
 
   const {getBom} = SurveyAction()
+
   const [state, setState] = useState<any>({})
 
   useEffect(() => {
@@ -91,6 +93,15 @@ const ConfirmSurvey = () => {
         <p className={'title'}>업로드 파일</p>
         <p className={'desc'}>{state?.fileInfo?.pdfFile?.name}</p>
       </div>
+
+      <Styles.ButtonWrap>
+        <button>해당 페이지 PDF 저장하기</button>
+        <button onClick={() => {
+          navigate('/bom/detail/'+seq)
+        }}>BOM 확인하기</button>
+      </Styles.ButtonWrap>
+
+
     </Styles.ConfirmETC>
   </Styles.ConfirmWrap>
 }
