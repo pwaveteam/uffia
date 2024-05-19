@@ -54,7 +54,7 @@ const ConfirmSurvey = () => {
               {
                 value.answer.map( (it:any, idx2:number) => {
                   if(value.answer[idx2]) {
-                    return <div>
+                    return <div key={idx2}>
                       {
                         idx2 === 0 || idx2 === 2 ?
                           <p key={idx2} className={'red'}> {it} </p> :
@@ -69,7 +69,28 @@ const ConfirmSurvey = () => {
       }
     </Styles.ConfirmSurvey>
     <Styles.ConfirmETC>
-      123
+      <div>
+        <p className={'title'}>장비 설명</p>
+        <p className={'desc'}>{state?.equipMent}</p>
+      </div>
+      <div>
+        <p className={'title'}>추가 옵션 </p>
+        <p className={'desc'}>{state?.etc?.option}</p>
+      </div>
+      <div>
+        <p className={'title'}>고객 요청 사항</p>
+        <p className={'desc'}>{state?.etc?.description}</p>
+      </div>
+      <hr/>
+
+      <div>
+        <p className={'title'}>업로드 이미지</p>
+        <p className={'desc'}>{state?.fileInfo?.equipImage?.name}</p>
+      </div>
+      <div>
+        <p className={'title'}>업로드 파일</p>
+        <p className={'desc'}>{state?.fileInfo?.pdfFile?.name}</p>
+      </div>
     </Styles.ConfirmETC>
   </Styles.ConfirmWrap>
 }

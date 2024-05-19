@@ -37,9 +37,9 @@ const Styles = {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    flex: 3;
+    flex: 4;
     p{
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: bold;
     }
     > div {
@@ -61,7 +61,18 @@ const Styles = {
     }
   `,
   ConfirmETC: styled.div`
-    flex: 2
+    flex: 1;
+    > div {
+      p.title {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      p.desc {
+        font-size: 1rem;
+        font-weight: normal;
+        padding-bottom: 1rem;
+      }
+    }
   `
 }
 
