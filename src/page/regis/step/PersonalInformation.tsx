@@ -7,6 +7,7 @@ import Styles from "./Styles";
 import {NationList} from "./data/nation";
 import {CallingCodeList} from "./data/CallingCodeList";
 import {AnswerAtom, PersonalAtom} from "../../../store/atom/survey";
+import RequireField from "../../../module/RequireField";
 
 const PersonalInformation = ({setQuestion}: any) => {
   const {seq} = useParams()
@@ -45,23 +46,29 @@ const PersonalInformation = ({setQuestion}: any) => {
   }, [seq])
 
   return <Styles.ContentWrap>
-    <Styles.PersonalInputWrap require={'1'}>
-      <p>이름</p>
-      <input type={'text'} value={personal.lastName}
-             placeholder={'이름'}
-             onChange={e => setPersonal((prev: any) => ({...prev, lastName: e.target.value}))}/>
-    </Styles.PersonalInputWrap>
-    <Styles.PersonalInputWrap require={'1'}>
-      <p>성</p>
-      <input type={'text'} value={personal.firstName}
-             onChange={e => setPersonal((prev: any) => ({...prev, firstName: e.target.value}))}/>
-    </Styles.PersonalInputWrap>
-    <Styles.PersonalInputWrap require={'1'}>
-      <p>회사</p>
-      <input type={'text'} value={personal.company}
-             onChange={e => setPersonal((prev: any) => ({...prev, company: e.target.value}))}/>
-    </Styles.PersonalInputWrap>
-    <Styles.PersonalInputWrap require={'1'}>
+    <RequireField
+      title={'이름'}
+      require={true}
+      type={'text'} value={personal.lastName}
+      placeholder={'이름'}
+      onChange={(e: any) => setPersonal((prev: any) => ({...prev, lastName: e}))}
+    />
+    <RequireField
+      title={'성'}
+      require={true}
+      type={'text'} value={personal.firstName}
+      placeholder={'이름'}
+      onChange={(e: any) => setPersonal((prev: any) => ({...prev, firstName: e}))}
+    />
+    <RequireField
+      title={'회사'}
+      require={true}
+      type={'text'} value={personal.company}
+      placeholder={'이름'}
+      onChange={(e: any) => setPersonal((prev: any) => ({...prev, company: e}))}
+    />
+
+    <Styles.PersonalInputWrap require={'1'} className={'parent'}>
       <p>국가</p>
       <select value={personal.nation} onChange={e => setPersonal((prev: any) => ({...prev, nation: e.target.value}))}>
         <option value={''} disabled hidden>국가 선택</option>
@@ -70,12 +77,17 @@ const PersonalInformation = ({setQuestion}: any) => {
         ))}
       </select>
     </Styles.PersonalInputWrap>
-    <Styles.PersonalInputWrap require={'1'}>
-      <p>이메일</p>
-      <input type={'text'} value={personal.email}
-             onChange={e => setPersonal((prev: any) => ({...prev, email: e.target.value}))}/>
-    </Styles.PersonalInputWrap>
-    <Styles.PersonalInputWrap require={'1'}>
+
+
+    <RequireField
+      title={'이메일'}
+      require={true}
+      type={'text'} value={personal.email}
+      placeholder={'이름'}
+      onChange={(e: any) => setPersonal((prev: any) => ({...prev, email: e}))}
+    />
+
+    <Styles.PersonalInputWrap require={'1'} className={'parent'}>
       <p>전화번호</p>
       <div>
         <select value={personal.callingCode} onChange={e => setPersonal((prev: any) => ({...prev, callingCode: e.target.value}))}>
