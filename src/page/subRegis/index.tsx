@@ -69,13 +69,15 @@ const Index = () => {
       } else {
         merged[item.id] = {
           ...merged[item.id],
-          cnt: merged[item.id].cnt + item.cnt,
           single_amount: merged[item.id].single_amount + item.single_amount
         };
       }
     });
 
-    return Object.values(merged);
+    return {
+      item : Object.values(merged),
+      cnt: 1
+    };
   };
 
   const handleSubmit = () => {
@@ -84,10 +86,10 @@ const Index = () => {
       personal: JSON.stringify(personal),
       survey: JSON.stringify({
         ...result.payload,
-        application: result.payload.application = mergeItems(result.payload.application),
-        discharge: result.payload.discharge = mergeItems(result.payload.discharge),
-        supply: result.payload.supply = mergeItems(result.payload.supply),
-        robot: result.payload.robot = mergeItems(result.payload.robot),
+        application: mergeItems(result.payload.application),
+        discharge: mergeItems(result.payload.discharge),
+        supply: mergeItems(result.payload.supply),
+        robot: mergeItems(result.payload.robot),
       }),
       etc: JSON.stringify(etc),
       duplicate: answer['1'] === '2가지',

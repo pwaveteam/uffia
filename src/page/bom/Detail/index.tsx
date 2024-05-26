@@ -35,33 +35,23 @@ const Index = () => {
 
   useEffect(() => {
     if (state?.survey) {
-      const depth1 = {
-        application: state?.survey.application,
-        discharge: state?.survey.discharge,
-        supply: state?.survey.supply,
-      };
-
-
-      const depth2 = {
-        robot: state?.survey.robot,
-      };
 
       setPrice([
-        state?.survey.discharge.reduce((prev: number, next: any) => prev + next.single_amount, 0),
-        state?.survey.supply.reduce((prev: number, next: any) => prev + next.single_amount, 0),
-        state?.survey.application.reduce((prev: number, next: any) => prev + next.single_amount, 0),
-        state?.survey.robot.reduce((prev: number, next: any) => prev + next.single_amount, 0),
+        state?.survey.discharge.item.reduce((prev: number, next: any) => prev + next.single_amount, 0),
+        state?.survey.supply.item.reduce((prev: number, next: any) => prev + next.single_amount, 0),
+        state?.survey.application.item.reduce((prev: number, next: any) => prev + next.single_amount, 0),
+        state?.survey.robot.item.reduce((prev: number, next: any) => prev + next.single_amount, 0),
       ])
 
       setTableSpan({
         first: [
-          (Number(depth1.application.length) || 1) + 1 + Number(depth1.discharge.length) + 1 + Number(depth1.supply.length) + 1,
+          (Number(state?.survey.application.item.length) || 1) + 1 + Number(state?.survey.discharge.item.length) + 1 + Number(state?.survey.supply.item.length) + 1,
           2,
         ],
         second: [
-          Number(depth1.discharge.length) + 1,
-          Number(depth1.supply.length) + 1,
-          (Number(depth1.application.length) || 1) + 1,
+          Number(state?.survey.discharge.item.length) + 1,
+          Number(state?.survey.supply.item.length) + 1,
+          (Number(state?.survey.application.item.length) || 1) + 1,
           2
         ],
       });
@@ -135,11 +125,11 @@ const Index = () => {
                       case 0:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? thirdKey[currentSecondIndex] : ''}</td>
                       case 1:
-                        return <td className="top" key={j}>{isSecondTdFirstRender ? state.survey[third[currentSecondIndex]][i - targetRow]?.category : ''}</td>
+                        return <td className="top" key={j}>{isSecondTdFirstRender ? state.survey[third[currentSecondIndex]].item[i - targetRow]?.category : ''}</td>
                       case 2:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? '제품명' : ''}</td>
                       case 3:
-                        return <td className="top" key={j}>{state.survey[third[currentSecondIndex]][i - targetRow]?.part_name}</td>
+                        return <td className="top" key={j}>{state.survey[third[currentSecondIndex]].item[i - targetRow]?.part_name}</td>
                       case 4:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? '변경' : ''}</td>
                       case 5:
@@ -147,7 +137,7 @@ const Index = () => {
                       case 7:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? '옵션' : ''}</td>
                       case 8:
-                        return <td className="top" key={j}>{isSecondTdFirstRender ? '1' : ''}</td>
+                        return <td className="top" key={j}>{isSecondTdFirstRender ? state.survey[third[currentSecondIndex]].cnt || '' : ''}</td>
                       case 9:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? 'EA' : ''}</td>
                       case 10:
