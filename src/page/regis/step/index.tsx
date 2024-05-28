@@ -77,7 +77,7 @@ const Index = () => {
     if (!(personalValid() && questionValid())){
       setAlert({
         isShow: true,
-        content: '필수 입력값이 비었습니다.'
+        content: '필수 정보를 선택해주세요.'
       })
       setTimeout(() => {
         handleAppendWrongText()
@@ -125,7 +125,7 @@ const Index = () => {
 
             // 경고 문구를 담을 span 요소 생성
             const warningMessage = document.createElement('span');
-            warningMessage.textContent = "*필수 값 입니다.";
+            warningMessage.textContent = "*필수 정보 입니다.";
             warningMessage.style.color = 'red';  // 경고 문구를 빨간색으로 설정
             warningMessage.style.fontSize = '.7rem';  // 경고 문구를 빨간색으로 설정
             warningMessage.style.paddingBottom = '.5rem';
@@ -159,7 +159,7 @@ const Index = () => {
 
           // 경고 문구를 담을 span 요소 생성
           const warningMessage = document.createElement('span');
-          warningMessage.textContent = "*필수 값 입니다.";
+          warningMessage.textContent = "*필수 정보 입니다.";
           warningMessage.style.color = 'red';  // 경고 문구를 빨간색으로 설정
           warningMessage.style.fontSize = '.7rem';  // 경고 문구를 빨간색으로 설정
           warningMessage.style.paddingBottom = '.5rem';

@@ -31,7 +31,6 @@ const VideoInfo = styled.div`
   padding: .5rem 1rem .5rem;
   border: 1px solid #eee;
   border-radius: 1rem;
-  margin-left: 20rem;
   > video {
     width: 100%;
     display: block;
@@ -59,7 +58,7 @@ const RadioSelect = (props: any) => {
     <Wrap onClick={() => isInfo && setIsShow(true)}>
       <label>
         <input
-          type={'radio'}
+          type={'checkbox'}
           name={props.name}
           value={props.value}
           checked={props.checked}

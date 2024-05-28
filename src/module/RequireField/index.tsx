@@ -20,7 +20,7 @@ const Wrap = styled.div<{ require?: string }>`
     margin: 1rem 0 .5rem;
     color: black;
     font-weight: bold;
-    ${props => props.require && `&::before {
+    ${props => props.require && `&::after {
                                                   content: '* ';
                                                   color: red
                                            }`}
@@ -29,6 +29,9 @@ const Wrap = styled.div<{ require?: string }>`
     flex: 1;
     padding: .5rem 1rem;
     font-weight: normal;
+    outline-color: lightgray;
+    border-radius: 6px;
+    border-width: 1px;
   }
   >div{
     display: flex;

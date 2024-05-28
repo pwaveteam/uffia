@@ -47,29 +47,29 @@ const PersonalInformation = ({setQuestion}: any) => {
 
   return <Styles.ContentWrap>
     <RequireField
-      title={'이름'}
+      title={'이름 Name'}
       require={true}
       type={'text'} value={personal.lastName}
       placeholder={'이름'}
       onChange={(e: any) => setPersonal((prev: any) => ({...prev, lastName: e}))}
     />
     <RequireField
-      title={'성'}
+      title={'성 Last Name'}
       require={true}
       type={'text'} value={personal.firstName}
-      placeholder={'이름'}
+      placeholder={'성'}
       onChange={(e: any) => setPersonal((prev: any) => ({...prev, firstName: e}))}
     />
     <RequireField
-      title={'회사'}
+      title={'회사 Company'}
       require={true}
       type={'text'} value={personal.company}
-      placeholder={'이름'}
+      placeholder={'회사'}
       onChange={(e: any) => setPersonal((prev: any) => ({...prev, company: e}))}
     />
 
     <Styles.PersonalInputWrap require={'1'} className={'parent'}>
-      <p>국가</p>
+      <p>국가 Country</p>
       <select value={personal.nation} onChange={e => setPersonal((prev: any) => ({...prev, nation: e.target.value}))}>
         <option value={''} disabled hidden>국가 선택</option>
         {NationList.map((it: string, key: number) => (
@@ -80,22 +80,22 @@ const PersonalInformation = ({setQuestion}: any) => {
 
 
     <RequireField
-      title={'이메일'}
+      title={'이메일 E-mail address'}
       require={true}
       type={'text'} value={personal.email}
-      placeholder={'이름'}
+      placeholder={'1234@mail.com'}
       onChange={(e: any) => setPersonal((prev: any) => ({...prev, email: e}))}
     />
 
     <Styles.PersonalInputWrap require={'1'} className={'parent'}>
-      <p>전화번호</p>
+      <p>전화번호 Telephone</p>
       <div>
         <select value={personal.callingCode} onChange={e => setPersonal((prev: any) => ({...prev, callingCode: e.target.value}))}>
           {CallingCodeList.map((it: string, key: number) => (
             <option key={key}>{it}</option>
           ))}
         </select>
-        <input type={'text'} value={personal.call}
+        <input type={'text'} value={personal.call} placeholder={'000-0000-0000'}
                onChange={e => setPersonal((prev: any) => ({...prev, call: e.target.value}))}/>
       </div>
     </Styles.PersonalInputWrap>

@@ -6,6 +6,9 @@ const Styles = {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    > button {
+      width: 50%;
+    }
   `,
   HeaderWrap: styled.div`
     display: flex;
@@ -57,15 +60,21 @@ const Styles = {
     display: flex;
     flex: 1;
     background-color: #eee6e6;
-    padding: 5rem 3rem;
+    padding: 5rem 3rem 1rem;
   `,
   Content: styled.div`
     flex: 1;
     background-color: #fff;
     border-radius: 1rem;
-    height: calc(100vh - 20rem);
+    height: calc(100vh - 15rem);
     overflow-y: scroll;
     padding: .5rem 2rem 2rem;
+  `
+  ,
+  ButtonWrap: styled.div`
+    position: absolute;
+    right: 3rem;
+    top: 7rem;
   `
 }
 

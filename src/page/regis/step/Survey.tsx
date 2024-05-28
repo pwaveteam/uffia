@@ -7,6 +7,7 @@ import Styles from "./Styles";
 import Button from "../../../module/button";
 import { AnswerAtom } from "../../../store/atom/survey";
 import RadioSelect from "./component/RadioSelect";
+import MultipleSelect from "./component/MultipleSelect";
 import InfoPopup from "./component/InfoPopup"; // InfoPopup 컴포넌트를 임포트합니다.
 
 const Survey = ({ question, setQuestion }: any) => {
@@ -101,7 +102,7 @@ const Survey = ({ question, setQuestion }: any) => {
           return (
             <>
               <Styles.SurveyWrap key={key} className={"parent"}>
-                {answer["1"] === "2가지" && it.duplicate ? <p>[{key % 2 + 1}액형]</p> : ""}
+                {answer["1"] === "2가지" && it.duplicate ? <p>[{it.duplicate}액형]</p> : ""}
                 <p  onClick={() => it.infomation_type && handleOpenPopup(it)}>{it.no}. {it.title}</p>
                 <div>
                   {it.answer.map((it2: any, key2: number, arr2: any) => {
@@ -118,25 +119,40 @@ const Survey = ({ question, setQuestion }: any) => {
                         </div>
                       );
                     } else {
-                      return (
-                        <div key={key2}>
-                          <RadioSelect
-                            name={objKey}
-                            value={it2.title}
-                            title={it2.title}
-                            item={it2}
-                            checked={answer[objKey] === it2.title}
-                            onChange={(e: any) => handleUpdateValue(e)}
-                          />
-                        </div>
-                      );
+                      if (it2.multiple) {
+                        return (
+                            <div key={key2}>
+                              <MultipleSelect
+                                  name={objKey}
+                                  value={it2.title}
+                                  title={it2.title}
+                                  item={it2}
+                                  checked={answer[objKey] === it2.title}
+                                  onChange={(e: any) => handleUpdateValue(e)}
+                              />
+                            </div>
+                        );
+                      } else {
+                        return (
+                            <div key={key2}>
+                              <RadioSelect
+                                  name={objKey}
+                                  value={it2.title}
+                                  title={it2.title}
+                                  item={it2}
+                                  checked={answer[objKey] === it2.title}
+                                  onChange={(e: any) => handleUpdateValue(e)}
+                              />
+                            </div>
+                        );
+                      }
                     }
                   })}
                 </div>
               </Styles.SurveyWrap>
               {answer["1"] === "2가지" && it.duplicate === 1 && (
                 <Styles.SurveyWrap key={`survey-${key}-duplicate`} className={"parent"}>
-                  {answer["1"] === "2가지" && it.duplicate ? <p>[{(key + 1) % 2 + 1}액형]</p> : ""}
+                  {answer["1"] === "2가지" && it.duplicate ? <p>[{it.duplicate+1}액형]</p> : ""}
                   <p  onClick={() => it.infomation_type && handleOpenPopup(it)}>{it.no}. {it.title}</p>
                   <div>
                     {it.answer.map((it2: any, key2: number) => {
@@ -152,18 +168,33 @@ const Survey = ({ question, setQuestion }: any) => {
                           </div>
                         );
                       } else {
-                        return (
-                          <div key={key2}>
-                            <RadioSelect
-                              name={objKey2}
-                              value={it2.title}
-                              title={it2.title}
-                              checked={answer[objKey2] === it2.title}
-                              item={it2}
-                              onChange={(e: any) => handleUpdateValue(e)}
-                            />
-                          </div>
-                        );
+                        if (it2.multiple) {
+                          return (
+                              <div key={key2}>
+                                <MultipleSelect
+                                    name={objKey}
+                                    value={it2.title}
+                                    title={it2.title}
+                                    item={it2}
+                                    checked={answer[objKey] === it2.title}
+                                    onChange={(e: any) => handleUpdateValue(e)}
+                                />
+                              </div>
+                          );
+                        } else {
+                          return (
+                              <div key={key2}>
+                                <RadioSelect
+                                    name={objKey}
+                                    value={it2.title}
+                                    title={it2.title}
+                                    item={it2}
+                                    checked={answer[objKey] === it2.title}
+                                    onChange={(e: any) => handleUpdateValue(e)}
+                                />
+                              </div>
+                          );
+                        }
                       }
                     })}
                   </div>

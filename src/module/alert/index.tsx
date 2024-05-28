@@ -12,12 +12,13 @@ const Wrap = styled.div`
 `
 
 const Body = styled.div`
+  color: #666;
   position: absolute;
   left: 50%;
   top: 50%;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  border: 1px solid #000;
+  padding: 1rem 1.9rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
   background-color: white;
 `
 
