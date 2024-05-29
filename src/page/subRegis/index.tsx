@@ -7,10 +7,11 @@ import {UploadAction} from "../../store/action/upload";
 import {AnswerAtom, PersonalAtom} from "../../store/atom/survey";
 import SurveyAction from "../../store/action/survey";
 import {useNavigate} from "react-router-dom";
+import Button from "../../module/button";
 
 const Index = () => {
 
-  const options = ['옵션 1', '옵션 2', '옵션 3', '옵션 4', '옵션 5']
+  const options = ['IN-LINE SYSTEM*', 'HOUSE*', '압력센서', '옵션 4', '옵션 5']
 
   const [result, setResult] = useState<any>({})
   const [etc, setEtc] = useState({
@@ -183,7 +184,9 @@ const Index = () => {
         />
       </Styles.Content>
     </Styles.ContentBody>
-    <button onClick={handleSubmit}>제출하기</button>
+    <Styles.ButtonWrap>
+      <Button width={'100%'} bgColor={'#452df8'} onClick={'handleSubmit'} text={'제출하기'}/>
+    </Styles.ButtonWrap>
   </Styles.SubWrap>
 }
 

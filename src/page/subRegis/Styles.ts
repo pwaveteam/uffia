@@ -28,7 +28,15 @@ const Styles = {
     border: none;
     width: 100%;
     height: 100%;
-  `
+  `,
+  ButtonWrap: styled.div`
+    position: absolute;
+    right: 5rem;
+    bottom: 4rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  `,
 }
 
 export default Styles

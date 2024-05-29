@@ -21,7 +21,7 @@ const Index = ({
   return <Container style={{
     color: color || 'white',
     backgroundColor: bgColor || '#666666',
-    width: width || '100%'
+    width: width || ''
   }}
   onClick={(e) => onClick && onClick(e)}>
     {text}
