@@ -1,109 +1,212 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import SurveyAction from "../../../store/action/survey";
 import Styles from "../Styles";
+import styled from "styled-components";
+import AdminAction from "../../../store/action/adminAction";
+import { toast } from "react-toastify";
 
 const ConfirmSurvey = () => {
+  const { seq } = useParams();
+  const navigate = useNavigate();
 
-  const {seq} = useParams()
-  const navigate = useNavigate()
+  const { getBom } = SurveyAction();
 
-  const {getBom} = SurveyAction()
-
-  const [state, setState] = useState<any>({})
+  const [state, setState] = useState<any>({});
 
   useEffect(() => {
-    getBom(seq?.toString() || '0').then(res => {
-      setState(res.payload)
-      console.log(res.payload)
-    })
-  }, [seq])
+    getBom(seq?.toString() || "0").then((res) => {
+      setState(res.payload);
+    });
+  }, [seq]);
 
-  return <Styles.ConfirmWrap>
-    <Styles.ConfirmPerson>
+  const { sendEmail } = AdminAction();
 
-      <div>
-        <p className={'title'}> 이름 </p>
-        <p className={'content'}> {state.person?.lastName} </p>
-      </div>
-      <div>
-        <p className={'title'}> 성 </p>
-        <p className={'content'}> {state.person?.firstName} </p>
-      </div>
-      <div>
-        <p className={'title'}> 국가 </p>
-        <p className={'content'}> {state.person?.nation} </p>
-      </div>
-      <div>
-        <p className={'title'}> 전화 </p>
-        <p className={'content'}> {state.person?.callingCode} {state.person?.call} </p>
-      </div>
-      <div>
-        <p className={'title'}> 회사 </p>
-        <p className={'content'}> {state.person?.company} </p>
-      </div>
-      <div>
-        <p className={'title'}> 이메일 </p>
-        <p className={'content'}> {state.person?.email} </p>
-      </div>
-
-    </Styles.ConfirmPerson>
-    <Styles.ConfirmSurvey>
-      {
-        state.answer && Object.entries(state.answer).map( ([key, value]: any, idx: number) => {
-          return <div key={idx}>
-            <p>{value.no}. {value.question}</p>
-              {
-                value.answer.map( (it:any, idx2:number) => {
-                  if(value.answer[idx2]) {
-                    return <div key={idx2}>
-                      {
-                        idx2 === 0 || idx2 === 2 ?
-                          <p key={idx2} className={'red'}> {it} </p> :
-                          <p key={idx2} className={'answer'}>{it}</p>
-                      }
-                    </div>
-                  }
-                })
-              }
+  return (
+    <>
+      <Styles.ConfirmWrap>
+        <Styles.ConfirmPerson>
+          <Title>기본정보</Title>
+          <div>
+            <PersonInfoTitle className={"title"}>
+              이름 <RedDot>*</RedDot>
+            </PersonInfoTitle>
+            <PersonInfo className={"content"}>
+              {" "}
+              {state.person?.lastName}{" "}
+            </PersonInfo>
           </div>
-        })
-      }
-    </Styles.ConfirmSurvey>
-    <Styles.ConfirmETC>
-      <div>
-        <p className={'title'}>장비 설명</p>
-        <p className={'desc'}>{state?.equipMent}</p>
-      </div>
-      <div>
-        <p className={'title'}>추가 옵션 </p>
-        <p className={'desc'}>{state?.etc?.option}</p>
-      </div>
-      <div>
-        <p className={'title'}>고객 요청 사항</p>
-        <p className={'desc'}>{state?.etc?.description}</p>
-      </div>
-      <hr/>
+          <div>
+            <PersonInfoTitle className={"title"}>
+              {" "}
+              성 <RedDot>*</RedDot>
+            </PersonInfoTitle>
+            <PersonInfo className={"content"}>
+              {" "}
+              {state.person?.firstName}{" "}
+            </PersonInfo>
+          </div>
+          <div>
+            <PersonInfoTitle className={"title"}>
+              {" "}
+              국가 <RedDot>*</RedDot>
+            </PersonInfoTitle>
+            <PersonInfo className={"content"}>
+              {" "}
+              {state.person?.nation}{" "}
+            </PersonInfo>
+          </div>
+          <div>
+            <PersonInfoTitle className={"title"}>
+              {" "}
+              전화 <RedDot>*</RedDot>
+            </PersonInfoTitle>
+            <PersonInfo className={"content"}>
+              {state.person?.callingCode} {state.person?.call}{" "}
+            </PersonInfo>
+          </div>
+          <div>
+            <PersonInfoTitle className={"title"}>
+              {" "}
+              회사 <RedDot>*</RedDot>
+            </PersonInfoTitle>
+            <PersonInfo className={"content"}>
+              {" "}
+              {state.person?.company}{" "}
+            </PersonInfo>
+          </div>
+          <div>
+            <PersonInfoTitle className={"title"}>
+              {" "}
+              이메일 <RedDot>*</RedDot>
+            </PersonInfoTitle>
+            <PersonInfo className={"content"}>
+              {" "}
+              {state.person?.email}{" "}
+            </PersonInfo>
+          </div>
+        </Styles.ConfirmPerson>
+        <Styles.ConfirmSurvey>
+          <Title>질문 / 답변</Title>
+          {state.answer &&
+            Object.entries(state.answer).map(
+              ([key, value]: any, idx: number) => {
+                return (
+                  <div key={idx}>
+                    <SurveyInfoTitle>
+                      {value.no}. {value.question}
+                    </SurveyInfoTitle>
+                    {value.answer.map((it: any, idx2: number) => {
+                      if (value.answer[idx2]) {
+                        return (
+                          <div key={idx2}>
+                            {idx2 === 0 || idx2 === 2 ? (
+                              <SurveyInfoContent key={idx2} className={"red"}>
+                                {it}
+                              </SurveyInfoContent>
+                            ) : (
+                              <SurveyInfoContent
+                                key={idx2}
+                                className={"answer"}
+                              >
+                                {it}
+                              </SurveyInfoContent>
+                            )}
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
+                );
+              }
+            )}
+        </Styles.ConfirmSurvey>
+        <Styles.ConfirmETC>
+          <Wrapper>
+            <Title>장비 설명</Title>
+            <p className={"desc"}>{state?.equipMent}</p>
+          </Wrapper>
+          <Wrapper>
+            <Title>추가 옵션 </Title>
+            <p className={"desc"}>{state?.etc?.option}</p>
+          </Wrapper>
+          <Wrapper>
+            <Title>고객 요청 사항</Title>
+            <p className={"desc"}>{state?.etc?.description}</p>
+          </Wrapper>
 
-      <div>
-        <p className={'title'}>업로드 이미지</p>
-        <p className={'desc'}>{state?.fileInfo?.equipImage?.name}</p>
-      </div>
-      <div>
-        <p className={'title'}>업로드 파일</p>
-        <p className={'desc'}>{state?.fileInfo?.pdfFile?.name}</p>
-      </div>
+          <Wrapper>
+            <Title>업로드 이미지</Title>
+            <p className={"desc"}>{state?.fileInfo?.equipImage?.name}</p>
+          </Wrapper>
+          <Wrapper>
+            <Title>업로드 파일</Title>
+            <p className={"desc"}>{state?.fileInfo?.pdfFile?.name}</p>
+          </Wrapper>
+        </Styles.ConfirmETC>
+      </Styles.ConfirmWrap>
+      <ButtonContainer>
+        <Styles.ButtonWrap>
+          <button
+            onClick={async () => {
+              // 누구에게 보내는지,
+              // await sendEmail(email, {
+              //   text: "mockup data",
+              // });
 
-      <Styles.ButtonWrap>
-        <button>해당 페이지 PDF 저장하기</button>
-        <button onClick={() => {
-          navigate('/bom/detail/'+seq)
-        }}>BOM 확인하기</button>
-      </Styles.ButtonWrap>
+              toast("제출되었습니다");
 
+              navigate("/bom/detail/" + seq);
+            }}
+          >
+            결과보기
+          </button>
+        </Styles.ButtonWrap>
+      </ButtonContainer>
+    </>
+  );
+};
 
-    </Styles.ConfirmETC>
-  </Styles.ConfirmWrap>
-}
+export default ConfirmSurvey;
 
-export default ConfirmSurvey
+const Title = styled.div`
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
+const PersonInfoTitle = styled.div`
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
+const PersonInfo = styled.div`
+  padding-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #777;
+`;
+
+const RedDot = styled.span`
+  color: red;
+  font-weight: normal;
+`;
+
+const SurveyInfoTitle = styled.div`
+  font-size: 0.8rem;
+`;
+
+const SurveyInfoContent = styled.div`
+  font-size: 0.75rem;
+  color: #777;
+`;
+
+const Wrapper = styled.div`
+  border-radius: 0.5rem;
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+  height: 10rem;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: end;
+`;

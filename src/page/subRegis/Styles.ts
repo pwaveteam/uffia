@@ -3,40 +3,25 @@ import styled from "styled-components";
 const Styles = {
   SubWrap: styled.div`
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
-  `,
-  ContentBody: styled.div<{flexSize?: string}>`
-    display: flex;
-    flex-direction: column;
-    flex: ${props => props.flexSize || '1'};
-    min-width: calc(33% - 2rem);
+    margin-top: 2rem;
   `,
   Title: styled.p`
     font-weight: bold;
-    font-size: 1rem;
-  `,
-  Content: styled.div`
-    flex: 1;
-    background-color: #f5f5f5;
-    padding: .5rem 1rem;
-    border-radius: .5rem;
+    font-size: 0.66rem;
+    margin-bottom: 0.5rem;
   `,
   TextArea: styled.textarea`
-    background-color: #f5f5f5;
     border: none;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 1.5rem);
   `,
   ButtonWrap: styled.div`
-    position: absolute;
-    right: 5rem;
-    bottom: 4rem;
     display: flex;
     flex-direction: row;
     gap: 1rem;
   `,
-}
+};
 
-export default Styles
+export default Styles;

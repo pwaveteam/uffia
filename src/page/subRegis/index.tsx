@@ -1,83 +1,83 @@
-import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
-import {headerAtom} from "../../store/atom/header";
-import {useEffect, useState} from "react";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import { headerAtom } from "../../store/atom/header";
+import { useEffect, useState } from "react";
 import Styles from "./Styles";
 import FileUpload from "../../module/fileUpload";
-import {UploadAction} from "../../store/action/upload";
-import {AnswerAtom, PersonalAtom} from "../../store/atom/survey";
+import { UploadAction } from "../../store/action/upload";
+import { AnswerAtom, PersonalAtom } from "../../store/atom/survey";
 import SurveyAction from "../../store/action/survey";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../module/button";
+import styled from "styled-components";
 
 const Index = () => {
+  const options = ["IN-LINE SYSTEM*", "HOUSE*", "압력센서", "옵션 4", "옵션 5"];
 
-  const options = ['IN-LINE SYSTEM*', 'HOUSE*', '압력센서', '옵션 4', '옵션 5']
-
-  const [result, setResult] = useState<any>({})
+  const [result, setResult] = useState<any>({});
   const [etc, setEtc] = useState({
-    description: '',
-    option: ''
-  })
+    description: "",
+    option: "",
+  });
   const [fileInfo, setFileInfo] = useState({
     equipImage: 0,
-    pdfFile: 0
-  })
+    pdfFile: 0,
+  });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const setHeader = useSetRecoilState(headerAtom)
-  const answer = useRecoilValue(AnswerAtom)
-  const personal = useRecoilValue(PersonalAtom)
+  const setHeader = useSetRecoilState(headerAtom);
+  const answer = useRecoilValue(AnswerAtom);
+  const personal = useRecoilValue(PersonalAtom);
 
-  const resetAnswer = useResetRecoilState(AnswerAtom)
-  const resetPersonal = useResetRecoilState(PersonalAtom)
+  const resetAnswer = useResetRecoilState(AnswerAtom);
+  const resetPersonal = useResetRecoilState(PersonalAtom);
 
-  const {postSurvey, saveSurvey} = SurveyAction()
+  const { postSurvey, saveSurvey } = SurveyAction();
 
-  const handleFileInfo = (file: any, state:any,  typeKey: string) => {
+  const handleFileInfo = (file: any, state: any, typeKey: string) => {
     setFileInfo({
       ...fileInfo,
       [typeKey]: {
         id: file.id,
         name: state.name,
-        path: file.path
-      }
-    })
-  }
+        path: file.path,
+      },
+    });
+  };
 
-  const handleOptionCheck = (key:number, e: any) => {
-    let temp = etc.option.length > 1 ? etc.option.split(',') : []
+  const handleOptionCheck = (key: number, e: any) => {
+    let temp = etc.option.length > 1 ? etc.option.split(",") : [];
 
-    if(e.target.checked){
-      temp.push(options[key])
-    }else{
-      temp = temp.filter(it => it !== options[key])
+    if (e.target.checked) {
+      temp.push(options[key]);
+    } else {
+      temp = temp.filter((it) => it !== options[key]);
     }
 
     setEtc({
       ...etc,
-      option: temp.toString()
-    })
-  }
+      option: temp.toString(),
+    });
+  };
 
   const mergeItems = (items: any) => {
     const merged: any = {};
 
-    items.forEach((item:any) => {
+    items.forEach((item: any) => {
       if (item === null) return;
       if (!merged[item.id]) {
         merged[item.id] = { ...item };
       } else {
         merged[item.id] = {
           ...merged[item.id],
-          single_amount: merged[item.id].single_amount + item.single_amount
+          single_amount: merged[item.id].single_amount + item.single_amount,
         };
       }
     });
 
     return {
-      item : Object.values(merged),
-      cnt: 1
+      item: Object.values(merged),
+      cnt: 1,
     };
   };
 
@@ -93,101 +93,135 @@ const Index = () => {
         robot: mergeItems(result.payload.robot),
       }),
       etc: JSON.stringify(etc),
-      duplicate: answer['1'] === '2가지',
-      answer: JSON.stringify(answer)
-    }
+      duplicate: answer["1"] === "2가지",
+      answer: JSON.stringify(answer),
+    };
 
-    saveSurvey(body).then(res => {
-      resetAnswer()
-      resetPersonal()
+    saveSurvey(body).then((res) => {
+      resetAnswer();
+      resetPersonal();
 
-      navigate(`/confirm/${res.payload.seq}`)
-    })
-  }
+      navigate(`/confirm/${res.payload.seq}`);
+    });
+  };
 
   useEffect(() => {
-    postSurvey(answer)
-      .then((res: any) => {
-        setResult(res)
-      })
+    postSurvey(answer).then((res: any) => {
+      setResult(res);
+    });
 
     setHeader({
-      title: '최종 페이지',
+      title: "최종 페이지",
       maxStep: 0,
-      nowStep: 0
-    })
-  }, [])
+      nowStep: 0,
+    });
+  }, []);
 
-  return <Styles.SubWrap>
-    <Styles.ContentBody>
-      <Styles.Title> 3D 사진 </Styles.Title>
-      <Styles.Content>
-        <p> 3D 캐드 적용</p>
-      </Styles.Content>
-    </Styles.ContentBody>
+  return (
+    <Styles.SubWrap>
+      <ColumnContainer>
+        <Content>
+          <Styles.Title> 3D 사진 </Styles.Title>
+          <p> 3D 캐드 적용</p>
+        </Content>
 
-    <Styles.ContentBody>
-      <Styles.Title> 장비 설명 </Styles.Title>
-      <Styles.Content>
-        <p> {result.payload?.equipMent} </p>
-      </Styles.Content>
-    </Styles.ContentBody>
+        <Content>
+          <Styles.Title> 장비 설명 </Styles.Title>
+          <p> {result.payload?.equipMent} </p>
+        </Content>
 
-    <Styles.ContentBody>
-      <Styles.Title> 옵션 </Styles.Title>
-      <Styles.Content>
-        {
-          options.map((item, key) => (
+        <Content>
+          <Styles.Title>
+            {
+              "추가로 원하는 점이나 필요한 기능이 있다면 최대한 자세히 적어주세요."
+            }
+          </Styles.Title>
+          <Styles.TextArea
+            value={etc.description}
+            onChange={(e) =>
+              setEtc((prevState) => ({
+                ...prevState,
+                description: e.target.value,
+              }))
+            }
+          />
+        </Content>
+      </ColumnContainer>
+      <ColumnContainer>
+        <Content isGray>
+          <Styles.Title> 옵션 </Styles.Title>
+          {options.map((item, key) => (
             <>
               <label key={key}>
                 <input
                   type={"checkbox"}
-                  name={'optionCheck'}
+                  name={"optionCheck"}
                   value={item}
                   checked={etc.option.indexOf(item) !== -1}
-                  onChange={e => handleOptionCheck(key, e)}
+                  onChange={(e) => handleOptionCheck(key, e)}
                 />
                 {item}
               </label>
-              <br/>
+              <br />
             </>
-          ))
-        }
+          ))}
+        </Content>
 
-      </Styles.Content>
-    </Styles.ContentBody>
+        <Content isGray>
+          <Styles.Title>
+            {"장비를 적용하려는 제품의 사진 (jpeg, PNG)"}
+          </Styles.Title>
+          <FileUpload fileType={"equipImage"} setFileInfo={handleFileInfo} />
+        </Content>
 
-    <Styles.ContentBody>
-      <Styles.Title> 추가로 원하는 점이나 필요한 기능이 있다면 최대한 자세히 적어주세요. </Styles.Title>
-      <Styles.Content>
-        <Styles.TextArea value={etc.description} onChange={e => setEtc(prevState => ({
-          ...prevState,
-          description: e.target.value
-        }))}/>
-      </Styles.Content>
-    </Styles.ContentBody>
+        <Content isGray>
+          <Styles.Title> 액상 TDS(PDF) </Styles.Title>
+          <FileUpload
+            fileType={"pdfFile"}
+            setFileInfo={handleFileInfo}
+            accept={"application/pdf"}
+          />
+        </Content>
 
-    <Styles.ContentBody>
-      <Styles.Title> 장비를 적용하려는 제품의 사진 (jpeg, PNG) </Styles.Title>
-      <Styles.Content>
-        <FileUpload fileType={'equipImage'} setFileInfo={handleFileInfo}/>
-      </Styles.Content>
-    </Styles.ContentBody>
+        <Styles.ButtonWrap>
+          <Button
+            width={"100%"}
+            bgColor={"#452df8"}
+            onClick={handleSubmit}
+            text={"제출하기"}
+          />
+        </Styles.ButtonWrap>
+      </ColumnContainer>
+    </Styles.SubWrap>
+  );
+};
 
-    <Styles.ContentBody>
-      <Styles.Title> 액상 TDS(PDF) </Styles.Title>
-      <Styles.Content>
-        <FileUpload
-          fileType={'pdfFile'}
-          setFileInfo={handleFileInfo}
-          accept={'application/pdf'}
-        />
-      </Styles.Content>
-    </Styles.ContentBody>
-    <Styles.ButtonWrap>
-      <Button width={'100%'} bgColor={'#452df8'} onClick={'handleSubmit'} text={'제출하기'}/>
-    </Styles.ButtonWrap>
-  </Styles.SubWrap>
-}
+export default Index;
 
-export default Index
+const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  width: 40%;
+`;
+
+const Content = styled.div<{
+  isGray?: boolean;
+}>`
+  max-height: 13rem;
+  min-height: 13rem;
+
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e0e0e0;
+
+  ${(props) =>
+    props.isGray &&
+    `
+    background-color: #f8f8f8;
+  `}
+
+  overflow: scroll;
+`;

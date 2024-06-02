@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
 const Styles = {
-  Wrap: styled.div`
-    height: calc(100% - 8rem);
-  `
-}
+  Wrap: styled.div``,
+};
 
-export default Styles
+export default Styles;

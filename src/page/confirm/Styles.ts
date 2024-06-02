@@ -6,12 +6,13 @@ const Styles = {
   `,
 
   ConfirmWrap: styled.div`
-    padding-top: 1rem;
+    padding: 1.5rem 2rem;
+
     display: flex;
     gap: 1rem;
-    height: 100%;
+    height: 45rem;
     > div:not(:last-child) {
-      border-right: .1rem solid #eee;
+      border-right: 0.1rem solid #eee;
     }
   `,
 
@@ -20,48 +21,40 @@ const Styles = {
     flex-direction: column;
     flex: 1;
     gap: 2rem;
-    > div {
-      p.title {
-        font-weight: bold;
-        font-size: 1.3rem;
-        margin-bottom: .5rem;
-      }
-      p.content {
-        font-weight: normal;
-        font-size: 1rem;
-        color: #777;
-      }
-    }
+
+    border-radius: 0.5rem;
+    border: 1px solid #e0e0e0;
+    padding: 1rem;
   `,
   ConfirmSurvey: styled.div`
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
+
+    border-radius: 0.5rem;
+    border: 1px solid #e0e0e0;
+    padding: 1rem;
+
     flex: 4;
-    p{
-      font-size: 1rem;
-      font-weight: bold;
-    }
+
     > div {
       display: flex;
       flex-direction: row;
-      gap: .5rem;
+      gap: 0.5rem;
       > div {
         display: flex;
-        p{
-          font-weight: normal;
-        }
         p.red {
           color: red;
-        } 
-        p.answer{
-          color: #777;
         }
       }
     }
   `,
   ConfirmETC: styled.div`
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     > div {
       p.title {
         font-size: 1.2rem;
@@ -78,23 +71,22 @@ const Styles = {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    gap: 1rem;
-    >button {
+
+    padding-right: 2rem;
+
+    > button {
       min-width: 10rem;
-      flex: 1;
-      padding: .5rem 1rem;
+
+      padding: 0.5rem 1rem;
       color: white;
       border: none;
-      border-radius: .5rem;
+      border-radius: 0.5rem;
+
       &:nth-child(1) {
-        background-color: #333333;
-      }
-      &:nth-child(2) {
         background-color: #99210e;
-        
       }
     }
-  `
-}
+  `,
+};
 
-export default Styles
+export default Styles;
