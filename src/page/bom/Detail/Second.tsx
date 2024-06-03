@@ -1,16 +1,12 @@
-import { useParams } from "react-router-dom";
-import AdminAction from "../../../store/action/adminAction";
-import { Wrap, Table, MailWrap, MemoInput} from './Style';
 import { useEffect, useRef, useState } from "react";
-import SearchInput from "../../../module/searchInput";
-import Button from "../../../module/button";
-import { toast } from "react-toastify";
-import Input from "../../../module/Input";
-import Icon from "../../../module/Icon";
+import { useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { headerAtom } from "../../../store/atom/header";
 import styled from "styled-components";
-import Second from "./Second";
+import Icon from "../../../module/Icon";
+import SearchInput from "../../../module/searchInput";
+import AdminAction from "../../../store/action/adminAction";
+import { headerAtom } from "../../../store/atom/header";
+import { MemoInput } from './Style';
 
 function generateUUID() {
   let d = new Date().getTime(); // 현재 시간의 타임스탬프를 가져옴
@@ -30,14 +26,13 @@ function generateUUID() {
 }
 
 
-const firstKey = ['기구부', '제어부']
-const secondKey = ['토출부', '공급부', '제어부', '구동부(Auto)']
-const thirdKey = ['토출 구분', '공급 구분',  '제어 구분', '구동 구분']
-const third = ['discharge', 'supply', 'robot', 'application']
+const firstKey = ['제어부']
+const secondKey = ['구매', '전장외주', '기타요소']
+const thirdKey = ['기타 구매', '기타 구매',  '기타 구매']
+const third = ['discharge', 'supply', 'robot']
 
 
 const Index = () => {
-  const emailRef = useRef(null);
   const { seq } = useParams();
 
   const setHeader = useSetRecoilState(headerAtom);
@@ -56,11 +51,11 @@ const Index = () => {
     second: [0],
   });
 
+  console.log(tableSpan)
+
   const [isDrawing, setIsDrawing] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
-  const [email, setEmail] = useState('')
   const [list, setList] = useState<any>({
-    application: [],
     discharge: [],
     supply: [],
     robot: [],
@@ -73,7 +68,7 @@ const Index = () => {
   const [state, setState] = useState<any>({});
   const [price, setPrice] = useState([0,0,0,0,0]);
 
-  const { getDetail, getItemList, saveBom, sendEmail } = AdminAction();
+  const { getDetail2, getItemList, saveBom } = AdminAction();
 
   const handleAppendRow = (key: string) => {
     setState((prevState:any) => {
@@ -86,9 +81,6 @@ const Index = () => {
     })
   }
 
-  const handleSaveBom = () => {
-    saveBom(state)
-  }
 
   const handleUpdateState = (key: string, idx: number, partName: string) => {
     setState((prevState: any) => {
@@ -128,15 +120,13 @@ const Index = () => {
         return list.supply
       case 2:
         return list.robot
-      case 3:
-        return list.application
       default:
         return []
     }
   }
 
   useEffect(() => {
-    seq && getDetail(seq, setState);
+    seq && getDetail2(seq, setState);
     getItemList(setList)
   }, [seq]);
 
@@ -147,12 +137,10 @@ const Index = () => {
         state?.survey.discharge.item.reduce((prev: number, next: any) => prev + next?.single_amount, 0),
         state?.survey.supply.item.reduce((prev: number, next: any) => prev + next?.single_amount, 0),
         state?.survey.robot.item.reduce((prev: number, next: any) => prev + next?.single_amount, 0),
-        state?.survey.application.item.reduce((prev: number, next: any) => prev + next?.single_amount, 0),
       ])
 
       setTableSpan({
         first: [
-          (Number(state?.survey.application.item.length) || 1) + 1 + 
           (Number(state?.survey.discharge.item.length) || 1) + 1 + 
           (Number(state?.survey.supply.item.length) || 1) + 1 + 
           (Number(state?.survey.robot.item.length) || 1) + 1,
@@ -161,7 +149,6 @@ const Index = () => {
           (Number(state?.survey.discharge.item.length) || 1) + 1,
           (Number(state?.survey.supply.item.length) || 1) + 1,
           (Number(state?.survey.robot.item.length) || 1) + 1,
-          (Number(state?.survey.application.item.length) || 1) + 1,
         ],
       });
     }
@@ -176,16 +163,8 @@ const Index = () => {
   }, [tableSpan]);
 
   return (
-    <Wrap>
-      <Table className="tg" ref={emailRef}>
-        <thead>
-        <tr>
-          <td colSpan={100}>장비구성 BOM</td>
-        </tr>
-        </thead>
-        {isDrawing && (
-          <tbody>
-          {new Array(totalRows).fill(1).map((_, i) => {
+    <>
+      {new Array(totalRows).fill(1).map((_, i) => {
             let firstTd = null;
             let secondTd = null;
             let isSecondTdFirstRender = false;
@@ -290,7 +269,6 @@ const Index = () => {
                       case 13:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? '단가' : ''}</td>
                       case 14:
-                        // return <td className="top" key={j}>{isSecondTdFirstRender ? (price[currentSecondIndex] * state.survey[third[currentSecondIndex]].cnt).toLocaleString('KO-KR') : ''}</td>
                         return <td className="top" key={j}>{isSecondTdFirstRender ? (price[currentSecondIndex]).toLocaleString('KO-KR') : ''}</td>
                       case 15:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? '원' : ''}</td>
@@ -334,117 +312,7 @@ const Index = () => {
               </tr>
             );
           })}
-          <Second />
-          <tr className={'etcTr'}>
-            <td className={'dept1'} rowSpan={5}>기타 비용</td>
-            <td className={'dept2 top'}>SET-UP</td>
-            <td className={'top'} colSpan={8}>필요 내역 직접 입력</td>
-            <td className={'top'}>1</td>
-            <td className={'top'}>EA</td>
-            <td className={'top'}>+</td>
-            <td className={'top'}>-</td>
-            <td className={'top'} />
-            <td className={'top'}>단가</td>
-            <td className={'top'}>0</td>
-            <td className={'top'}>원</td>
-            <td className={'top'}>x</td>
-          </tr>
-          <tr className={'etcTr'}>
-            <td className={'dept2 top'}>전장</td>
-            <td className={'top'} colSpan={8}>필요 내역 직접 입력</td>
-            <td className={'top'}>1</td>
-            <td className={'top'}>EA</td>
-            <td className={'top'}>+</td>
-            <td className={'top'}>-</td>
-            <td className={'top'} />
-            <td className={'top'}>단가</td>
-            <td className={'top'}>0</td>
-            <td className={'top'}>원</td>
-            <td className={'top'}>x</td>
-          </tr>
-          <tr className={'etcTr'}>
-            <td className={'dept2 top'}>설계</td>
-            <td className={'top'} colSpan={8}>필요 내역 직접 입력</td>
-            <td className={'top'}>1</td>
-            <td className={'top'}>EA</td>
-            <td className={'top'}>+</td>
-            <td className={'top'}>-</td>
-            <td className={'top'} />
-            <td className={'top'}>단가</td>
-            <td className={'top'}>0</td>
-            <td className={'top'}>원</td>
-            <td className={'top'}>x</td>
-          </tr>
-          <tr className={'etcTr'}>
-            <td className={'dept2 top'}>생산</td>
-            <td className={'top'} colSpan={8}>필요 내역 직접 입력</td>
-            <td className={'top'}>1</td>
-            <td className={'top'}>EA</td>
-            <td className={'top'}>+</td>
-            <td className={'top'}>-</td>
-            <td className={'top'} />
-            <td className={'top'}>단가</td>
-            <td className={'top'}>0</td>
-            <td className={'top'}>원</td>
-            <td className={'top'}>x</td>
-          </tr>
-          <tr className={'etcTr'}>
-            <td className={'dept2 top'}>운송</td>
-            <td className={'top'} colSpan={8}>필요 내역 직접 입력</td>
-            <td className={'top'}>1</td>
-            <td className={'top'}>EA</td>
-            <td className={'top'}>+</td>
-            <td className={'top'}>-</td>
-            <td className={'top'} />
-            <td className={'top'}>단가</td>
-            <td className={'top'}>0</td>
-            <td className={'top'}>원</td>
-            <td className={'top'}>x</td>
-          </tr>
-          </tbody>
-        )}
-      </Table>
-
-      <MailWrap>
-        <Input
-          type={"text"}
-          placeholder={"example@email.com"}
-          value={email}
-          onChange={(e: any) => setEmail(e.target.value)}
-        />
-        <Button
-          text={"메일 전송하기"}
-          style={{
-            backgroundColor: " #d9ecff",
-            color: "#000",
-          }}
-          onClick={async () => {
-            const isValidEmail = (email: string) => {
-              var regex =
-                /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-              return regex.test(email);
-            };
-
-            if (isValidEmail(email)) {
-              try {
-                const dom: any = emailRef.current;
-                const html = dom.outerHTML;
-
-                await sendEmail(email, "장비 구성 BOM", {
-                  html,
-                });
-                toast("이메일 보내기에 성공했습니다");
-              } catch (e) {
-                console.log(e);
-                toast("이메일 보내기에 실패했습니다");
-              }
-            } else {
-              toast("올바른 이메일을 입력해주세요");
-            }
-          }}
-        />
-      </MailWrap>
-    </Wrap>
+              </>
   );
 };
 

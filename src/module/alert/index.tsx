@@ -16,7 +16,7 @@ const Body = styled.div`
   position: absolute;
   left: 50%;
   top: 50%;
-  padding: 1rem 1.9rem;
+  padding: 2rem 2rem;
   border-radius: 0.5rem;
   border: 1px solid #ccc;
   background-color: white;
@@ -24,7 +24,8 @@ const Body = styled.div`
 
 const Content = styled.p`
   font-size: 1rem;
-  padding-bottom: 1rem;
+  padding-bottom: 2rem;
+  white-space: pre-wrap;
 `;
 
 const Button = styled.button`
@@ -52,7 +53,7 @@ const Index = ({ content }: any) => {
             closeAlert();
           }}
         >
-          닫기
+          CANCEL
         </Button>
       </Body>
     </Wrap>

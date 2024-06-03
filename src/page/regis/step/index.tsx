@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { PersonalAtom, AnswerAtom } from "../../../store/atom/survey";
 import { alertAtom } from "../../../store/atom/alert";
 import styled from "styled-components";
+import { Modal } from "../../../module/Modal";
 
 const initialQuestion = {
   size: 0,
@@ -66,7 +67,7 @@ const Index = () => {
       question.row.map((it: any, key: number) => {
         const objKey =
           answer["1"] === "2가지" && it.duplicate
-            ? `${it.id}-${key + 1}`
+            ? `${it.id}-${1}`
             : it.id;
 
         if (!it.default) {
@@ -220,11 +221,21 @@ const Index = () => {
             onClick={() => handleBackChange(question.prev)}
           />
         )}
-        <Button
+        {header.nowStep === 0 ? (
+          <Modal onClick={() => handleStepChange(question.next)}>
+            <Button
+            bgColor={"#0600ff"}
+            text={"다음으로"}
+          />
+          </Modal>
+          ) : (
+            <Button
           bgColor={"#0600ff"}
           text={"다음으로"}
           onClick={() => handleStepChange(question.next)}
         />
+          )}
+        
       </ButtonWrap>
     </StepContainer>
   );

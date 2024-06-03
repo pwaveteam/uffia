@@ -1,5 +1,8 @@
 import {useEffect, useState} from "react";
 import styled from "styled-components";
+import Tooltip from "../../../../module/Tooltip";
+import Icon from "../../../../module/Icon";
+import { convertToTitleCase } from "./RadioSelect";
 
 const Wrap = styled.div`
   position: relative;
@@ -46,52 +49,79 @@ const VideoInfo = styled.div`
 `
 
 const RadioSelect = (props: any) => {
+  const renderMessage = () => {
+    if (props.item.infomation_type === "text") {
+      return (
+        <Info>
+          <p>
+            <b>{props.item.infomation_title}</b>
+          </p>
+          <br />
+          {props.item.infomation}
+        </Info>
+      );
+}
 
-  const [isShow, setIsShow] = useState(false)
-  const [isInfo, setIsInfo] = useState(false)
+    if (props.item.infomation_type === "video") {
+      return (
+        <VideoInfo>
+          <video muted autoPlay width={300}>
+            <source
+              src={process.env.REACT_APP_IMAGE_URL + props.item.infomation}
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </VideoInfo>
+      );
+    }
 
-  useEffect(() => {
-    setIsInfo(!!props.item.infomation_type)
-  }, [props.item.infomation_type])
+    if (props.item.infomation_type === "image") {
+      return (
+        <>
+          <b>{props.item.infomation_title}</b>
+          <img
+            width={300}
+            src={process.env.REACT_APP_IMAGE_URL + props.item.infomation}
+          />
+        </>
+      );
+    }
+  };
+
+  
 
   return (
-    <Wrap onClick={() => isInfo && setIsShow(true)}>
+    <Wrap>
       <label>
         <input
           type={'checkbox'}
           name={props.name}
-          value={props.value}
+          value={props.title}
           checked={props.checked}
-          onChange={props.onChange}
+          onChange={(e) => {
+            // e.target.value
+            if(props.checked) {
+              const values: string[] = props.value?.split('@') || []
+              const x = values.filter(v => v !== props.title).join('@')
+              e.target.value = x;
+            }else {
+              const values: string[] = props.value?.split('@') || []
+              const x = [...values, props.title].join('@'); 
+              e.target.value = x;              
+            }
+            
+            props.onChange(e)
+          }}
         />
-        {props.title}
+        {convertToTitleCase(props.title)}
       </label>
-      {
-        isShow && props.item.infomation_type === 'text' ? (
-          <Info>
-            <p><b>{props.item.infomation_title}</b></p>
-            <br/>
-            <a onClick={(e:any) => {
-              e.stopPropagation(); // 이벤트 전파를 막음
-              setIsShow(false)
-            }}>닫기</a>
-            {props.item.infomation}
-          </Info>
-        ) : (
-          isShow && props.item.infomation_type === 'video' && (
-            <VideoInfo>
-              <video muted autoPlay>
-                <source src={process.env.REACT_APP_IMAGE_URL + props.item.infomation} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <a onClick={(e:any) => {
-                e.stopPropagation(); // 이벤트 전파를 막음
-                setIsShow(false)
-              }}>닫기</a>
-            </VideoInfo>
-          )
-        )
-      }
+      {props.item.infomation && (
+        <Tooltip message={renderMessage()}>
+          &nbsp;&nbsp;
+          <Icon icon="info" width={15} />
+        </Tooltip>
+      )}
     </Wrap>
   )
 }

@@ -5,6 +5,7 @@ import Styles from "../Styles";
 import styled from "styled-components";
 import AdminAction from "../../../store/action/adminAction";
 import { toast } from "react-toastify";
+import Button from "../../../module/button";
 
 const ConfirmSurvey = () => {
   const { seq } = useParams();
@@ -89,7 +90,28 @@ const ConfirmSurvey = () => {
         <Styles.ConfirmSurvey>
           <Title>질문 / 답변</Title>
           {state.answer &&
-            Object.entries(state.answer).map(
+            Object.entries(state.answer)
+            .sort((a,b) => {
+              const A: any = a;
+              const B: any = b;
+              const [firstA, secondA]= A[1]?.no.split('-').map(Number)
+              const [firstB, secondB]= B[1]?.no.split('-').map(Number)
+
+              if(firstA > firstB) {
+                return 1
+              }else if(firstA < firstB) {
+                  return -1
+              }
+
+              if(secondA > secondB) {
+                return 1
+              }else if(secondA < secondB) {
+                  return -1
+              }
+
+              return 1
+            })
+            .map(
               ([key, value]: any, idx: number) => {
                 return (
                   <div key={idx}>
@@ -109,7 +131,7 @@ const ConfirmSurvey = () => {
                                 key={idx2}
                                 className={"answer"}
                               >
-                                {it}
+                                {it.split('@').filter(Boolean).join(',')}
                               </SurveyInfoContent>
                             )}
                           </div>
@@ -146,8 +168,10 @@ const ConfirmSurvey = () => {
         </Styles.ConfirmETC>
       </Styles.ConfirmWrap>
       <ButtonContainer>
-        <Styles.ButtonWrap>
-          <button
+        <ButtonWrap>
+        <Button
+            width={"200px"}
+            bgColor={"#99210e"}
             onClick={async () => {
               // 누구에게 보내는지,
               // await sendEmail(email, {
@@ -158,10 +182,9 @@ const ConfirmSurvey = () => {
 
               navigate("/bom/detail/" + seq);
             }}
-          >
-            결과보기
-          </button>
-        </Styles.ButtonWrap>
+            text={"결과보기"}
+          />
+          </ButtonWrap>
       </ButtonContainer>
     </>
   );
@@ -210,3 +233,11 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: end;
 `;
+
+const ButtonWrap =  styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    padding-right: 2rem;
+  `

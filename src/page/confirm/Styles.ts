@@ -28,7 +28,7 @@ const Styles = {
   `,
   ConfirmSurvey: styled.div`
     display: flex;
-    flex-wrap: wrap;
+
     flex-direction: column;
     gap: 1.5rem;
 
@@ -37,6 +37,8 @@ const Styles = {
     padding: 1rem;
 
     flex: 4;
+
+    overflow: scroll;
 
     > div {
       display: flex;

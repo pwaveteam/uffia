@@ -15,7 +15,7 @@ const Header = ({ isAdmin }: HeaderProps) => {
           src="/logo/banLogo.svg"
           alt="logn"
           onClick={() => {
-            window.location.href = "/";
+            window.location.href = "/regis/0";
           }}
         />
         <HeaderLeft>

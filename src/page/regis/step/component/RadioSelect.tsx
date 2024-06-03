@@ -20,7 +20,7 @@ const RadioSelect = (props: any) => {
           {props.item.infomation}
         </Info>
       );
-    }
+}
 
     if (props.item.infomation_type === "video") {
       return (
@@ -73,10 +73,10 @@ const RadioSelect = (props: any) => {
 
 export default RadioSelect;
 
-function convertToTitleCase(str: string) {
+export function convertToTitleCase(str: string) {
   return str
     .toLowerCase()
-    .split("_")
+    .split(/_| /)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }

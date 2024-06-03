@@ -19,6 +19,7 @@ const Survey = ({ question, setQuestion }: any) => {
 
   const [header, setHeader] = useRecoilState(headerAtom);
   const [answer, setAnswer] = useRecoilState<any>(AnswerAtom);
+  console.log(answer)
 
   const { getSurvey } = SurveyAction();
 
@@ -67,7 +68,7 @@ const Survey = ({ question, setQuestion }: any) => {
       temp = {
         ...temp,
         [answer["1"] === "2가지" && it.duplicate
-          ? `${it.id}-${key + 1}`
+          ? `${it.id}-${1}`
           : it.id]: "",
       };
     });
@@ -119,188 +120,192 @@ const Survey = ({ question, setQuestion }: any) => {
     );
   };
 
-  return (
-    <>
-      <Styles.ContentWrap step={"1"}>
-        {question.row.map((it: any, key: number) => {
-          const objKey =
-            answer["1"] === "2가지" && it.duplicate
-              ? `${it.id}-${key + 1}`
-              : it.id;
-          const objKey2 =
-            answer["1"] === "2가지" && it.duplicate
-              ? `${it.id}-${key + 3}`
-              : it.id;
+  const duplicateArray = answer["1"] === "2가지" && question.row[0].duplicate ? [1,2] : [1]
 
-          return (
-            <>
-              <Styles.SurveyWrap key={key} className={"parent"}>
-                {answer["1"] === "2가지" && it.duplicate ? (
-                  <HeaderInfo>[액상 {it.duplicate}]</HeaderInfo>
-                ) : (
-                  ""
+  const render = (duplicateNumber: number) => {
+
+
+    return <Styles.ContentWrap step={"1"}>
+    {question.row.map((it: any, key: number) => {
+      const objKey = duplicateNumber === 2
+      ? `${it.id}-${1}`
+      : it.id;
+
+      return (
+        <>
+          <Styles.SurveyWrap key={objKey} className={"parent"}>
+            {answer["1"] === "2가지" && it.duplicate ? (
+              <HeaderInfo>[액상 {duplicateNumber}]</HeaderInfo>
+            ) : (
+              ""
+            )}
+            <Header>
+              {it.no}. {it.title} {renderTooltip(it)}
+            </Header>
+            <Row>
+              {it.descriptionImage && (
+                <DescriptionImage
+                  width={200}
+                  src={
+                    process.env.REACT_APP_IMAGE_URL + it.descriptionImage
+                  }
+                />
+              )}
+              <SurveyInner>
+                {it.answer.map((it2: any, key2: number, arr2: any) => {
+                  if (it2.placeholder) {
+                    return (
+                      <div key={key2}>
+                        <InputWrapper>
+                          {it2.title ? it2.title : ""} &nbsp;
+                          <Input
+                            type={it2.type || "text"}
+                            max={it2.max}
+                            min={it2.min}
+                            step={it2.step}
+                            placeholder={it2.placeholder}
+                            name={objKey}
+                            value={
+                              answer[objKey]?.split(",").length > 1
+                                ? answer[objKey].split(",")[key2]
+                                : answer[objKey]
+                            }
+                            onChange={(e: any) =>
+                              handleInputUpdate(e, key2, arr2.length)
+                            }
+                          />{" "}
+                          {it2.unit}
+                        </InputWrapper>
+                        {it2.description && (
+                          <Description>* {it2.description}</Description>
+                        )}
+                      </div>
+                    );
+                  } else {
+                    if (it.multiple) {
+                      return (
+                        <div key={key2}>
+                          <MultipleSelect
+                            name={objKey}
+                            value={answer[objKey]}
+                            title={it2.title}
+                            item={it2}
+                            checked={answer[objKey]?.includes(it2.title)}
+                            onChange={(e: any) => handleUpdateValue(e)}
+                          />
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div key={key2}>
+                          <RadioSelect
+                            name={objKey}
+                            value={it2.title}
+                            title={it2.title}
+                            item={it2}
+                            checked={answer[objKey] === it2.title}
+                            onChange={(e: any) => handleUpdateValue(e)}
+                          />
+                        </div>
+                      );
+                    }
+                  }
+                })}
+              </SurveyInner>
+            </Row>
+          </Styles.SurveyWrap>
+          {/* {answer["1"] === "2가지" && it.duplicate === 1 && (
+            <Styles.SurveyWrap
+              key={`survey-${key}-duplicate`}
+              className={"parent"}
+            >
+              {answer["1"] === "2가지" && it.duplicate ? (
+                <HeaderInfo>[액상 {it.duplicate + 1}]</HeaderInfo>
+              ) : (
+                ""
+              )}
+              <Header>
+                {it.no}. {it.title} {renderTooltip(it)}
+              </Header>
+              <Row>
+                {it.descriptionImage && (
+                  <DescriptionImage
+                    width={200}
+                    src={
+                      process.env.REACT_APP_IMAGE_URL + it.descriptionImage
+                    }
+                  />
                 )}
-                <Header>
-                  {it.no}. {it.title} {renderTooltip(it)}
-                </Header>
-                <Row>
-                  {it.descriptionImage && (
-                    <DescriptionImage
-                      width={200}
-                      src={
-                        process.env.REACT_APP_IMAGE_URL + it.descriptionImage
-                      }
-                    />
-                  )}
-                  <SurveyInner>
-                    {it.answer.map((it2: any, key2: number, arr2: any) => {
-                      if (it2.placeholder) {
+                <SurveyInner>
+                  {it.answer.map((it2: any, key2: number) => {
+                    if (it2.placeholder) {
+                      return (
+                        <div key={key2}>
+                          <InputWrapper>
+                            {it2.title ? it2.title : ""} &nbsp;
+                            <Input
+                              type={it2.type || "text"}
+                              max={it2.max}
+                              min={it2.min}
+                              step={it2.step}
+                              placeholder={it2.placeholder}
+                              name={objKey2}
+                              value={answer[objKey2] || ""}
+                              onChange={(e: any) => handleUpdateValue(e)}
+                            />{" "}
+                            {it2.unit}
+                          </InputWrapper>
+                          {it2.description && (
+                            <Description>* {it2.description}</Description>
+                          )}
+                        </div>
+                      );
+                    } else {
+                      if (it.multiple) {
                         return (
                           <div key={key2}>
-                            <InputWrapper>
-                              {it2.title ? it2.title : ""} &nbsp;
-                              <Input
-                                type={it2.type || "text"}
-                                max={it2.max}
-                                min={it2.min}
-                                step={it2.step}
-                                placeholder={it2.placeholder}
-                                name={objKey}
-                                value={
-                                  answer[objKey]?.split(",").length > 1
-                                    ? answer[objKey].split(",")[key2]
-                                    : answer[objKey]
-                                }
-                                onChange={(e: any) =>
-                                  handleInputUpdate(e, key2, arr2.length)
-                                }
-                              />{" "}
-                              {it2.unit}
-                            </InputWrapper>
-                            {it2.description && (
-                              <Description>* {it2.description}</Description>
-                            )}
+                            <MultipleSelect
+                              name={objKey2}
+                              value={answer[objKey2]}
+                              title={it2.title}
+                              item={it2}
+                              checked={answer[objKey2]?.includes(it2.title)}
+                              onChange={(e: any) => handleUpdateValue(e)}
+                            />
                           </div>
                         );
                       } else {
-                        if (it2.multiple) {
-                          return (
-                            <div key={key2}>
-                              <MultipleSelect
-                                name={objKey}
-                                value={it2.title}
-                                title={it2.title}
-                                item={it2}
-                                checked={answer[objKey] === it2.title}
-                                onChange={(e: any) => handleUpdateValue(e)}
-                              />
-                            </div>
-                          );
-                        } else {
-                          return (
-                            <div key={key2}>
-                              <RadioSelect
-                                name={objKey}
-                                value={it2.title}
-                                title={it2.title}
-                                item={it2}
-                                checked={answer[objKey] === it2.title}
-                                onChange={(e: any) => handleUpdateValue(e)}
-                              />
-                            </div>
-                          );
-                        }
+                        return (
+                          <div key={key2}>
+                            <RadioSelect
+                              name={objKey2}
+                              value={it2.title}
+                              title={it2.title}
+                              item={it2}
+                              checked={answer[objKey2] === it2.title}
+                              onChange={(e: any) => handleUpdateValue(e)}
+                            />
+                          </div>
+                        );
                       }
-                    })}
-                  </SurveyInner>
-                </Row>
-              </Styles.SurveyWrap>
-              {answer["1"] === "2가지" && it.duplicate === 1 && (
-                <Styles.SurveyWrap
-                  key={`survey-${key}-duplicate`}
-                  className={"parent"}
-                >
-                  {answer["1"] === "2가지" && it.duplicate ? (
-                    <HeaderInfo>[액상 {it.duplicate + 1}]</HeaderInfo>
-                  ) : (
-                    ""
-                  )}
-                  <Header>
-                    {it.no}. {it.title} {renderTooltip(it)}
-                  </Header>
-                  <Row>
-                    {it.descriptionImage && (
-                      <DescriptionImage
-                        width={200}
-                        src={
-                          process.env.REACT_APP_IMAGE_URL + it.descriptionImage
-                        }
-                      />
-                    )}
-                    <SurveyInner>
-                      {it.answer.map((it2: any, key2: number) => {
-                        if (it2.placeholder) {
-                          return (
-                            <div key={key2}>
-                              <InputWrapper>
-                                {it2.title ? it2.title : ""} &nbsp;
-                                <Input
-                                  type={it2.type || "text"}
-                                  max={it2.max}
-                                  min={it2.min}
-                                  step={it2.step}
-                                  placeholder={it2.placeholder}
-                                  name={objKey2}
-                                  value={answer[objKey2] || ""}
-                                  onChange={(e: any) => handleUpdateValue(e)}
-                                />{" "}
-                                {it2.unit}
-                              </InputWrapper>
-                              {it2.description && (
-                                <Description>* {it2.description}</Description>
-                              )}
-                            </div>
-                          );
-                        } else {
-                          if (it2.multiple) {
-                            return (
-                              <div key={key2}>
-                                <MultipleSelect
-                                  name={objKey}
-                                  value={it2.title}
-                                  title={it2.title}
-                                  item={it2}
-                                  checked={answer[objKey] === it2.title}
-                                  onChange={(e: any) => handleUpdateValue(e)}
-                                />
-                              </div>
-                            );
-                          } else {
-                            return (
-                              <div key={key2}>
-                                <RadioSelect
-                                  name={objKey2}
-                                  value={it2.title}
-                                  title={it2.title}
-                                  item={it2}
-                                  checked={answer[objKey2] === it2.title}
-                                  onChange={(e: any) => handleUpdateValue(e)}
-                                />
-                              </div>
-                            );
-                          }
-                        }
-                      })}
-                    </SurveyInner>
-                  </Row>
-                </Styles.SurveyWrap>
-              )}
-            </>
-          );
-        })}
-      </Styles.ContentWrap>
-    </>
-  );
+                    }
+                  })}
+                </SurveyInner>
+              </Row>
+            </Styles.SurveyWrap>
+          )} */}
+        </>
+      );
+    })}
+  </Styles.ContentWrap>
+  }
+
+  
+  return <>{
+    duplicateArray.map((duplicateNumber) => {
+      return render(duplicateNumber)
+    })
+}</>
 };
 
 export default Survey;

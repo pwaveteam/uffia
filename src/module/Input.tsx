@@ -1,5 +1,7 @@
 import { ChangeEvent } from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { alertAtom } from "../store/atom/alert";
 
 type InputProps = {
   type?: string;
@@ -13,6 +15,9 @@ type InputProps = {
 };
 
 const Input = ({ min, ...props }: InputProps) => {
+  const setAlert = useSetRecoilState(alertAtom);
+
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (props.type === "number") {
@@ -20,12 +25,22 @@ const Input = ({ min, ...props }: InputProps) => {
       if (props.max && numberValue > props.max) {
         e.target.value = String(props.max);
         props.onChange(e);
+
+        setAlert({
+          isShow: true,
+          content: "죄송합니다. 해당 값은 입력이 불가합니다.\n자세한 내용은 영업사원에게 문의바랍니다.\n다음질문으로 넘어가 주세요",
+        });
         return;
       }
 
       if (typeof min === "number" && numberValue < min) {
         e.target.value = String(min);
         props.onChange(e);
+
+        setAlert({
+          isShow: true,
+          content:  "죄송합니다. 해당 값은 입력이 불가합니다.\n자세한 내용은 영업사원에게 문의바랍니다.\n다음질문으로 넘어가 주세요",
+        });
         return;
       }
     }

@@ -41,7 +41,7 @@ const LeftMenu = ({ children }: LeftMenuProps) => {
         <MenuItem
           onClick={() => {
             window.location.href =
-              "http://www.banseok.co.kr/kor/about/company.html";
+              "http://www.banseok.co.kr/kor/about/customer.html";
           }}
         >
           <Icon icon="headset" width={30} />

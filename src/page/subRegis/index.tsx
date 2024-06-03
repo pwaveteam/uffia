@@ -11,7 +11,7 @@ import Button from "../../module/button";
 import styled from "styled-components";
 
 const Index = () => {
-  const options = ["IN-LINE SYSTEM*", "HOUSE*", "압력센서", "옵션 4", "옵션 5"];
+  const options = ["housing ( case )", "In-Line System( 장비 자동화 )", "Machine Vision", "Touch Screen"];
 
   const [result, setResult] = useState<any>({});
   const [etc, setEtc] = useState({
@@ -82,15 +82,23 @@ const Index = () => {
   };
 
   const handleSubmit = () => {
+
+    const payload = result.payload || {
+      application: [],
+      discharge: [],
+      supply: [],
+      robot: [],
+    }
+
     const body = {
       fileInfo: JSON.stringify(fileInfo),
       personal: JSON.stringify(personal),
       survey: JSON.stringify({
-        ...result.payload,
-        application: mergeItems(result.payload.application),
-        discharge: mergeItems(result.payload.discharge),
-        supply: mergeItems(result.payload.supply),
-        robot: mergeItems(result.payload.robot),
+        ...payload,
+        application: mergeItems(payload.application),
+        discharge: mergeItems(payload.discharge),
+        supply: mergeItems(payload.supply),
+        robot: mergeItems(payload.robot),
       }),
       etc: JSON.stringify(etc),
       duplicate: answer["1"] === "2가지",
@@ -122,7 +130,7 @@ const Index = () => {
       <ColumnContainer>
         <Content>
           <Styles.Title> 3D 사진 </Styles.Title>
-          <p> 3D 캐드 적용</p>
+          <img width={"70%"} src={process.env.REACT_APP_IMAGE_URL + 'static/dual-cartridge.png'}/>
         </Content>
 
         <Content>
@@ -188,7 +196,7 @@ const Index = () => {
             width={"100%"}
             bgColor={"#452df8"}
             onClick={handleSubmit}
-            text={"제출하기"}
+            text={"결과보기"}
           />
         </Styles.ButtonWrap>
       </ColumnContainer>

@@ -104,4 +104,19 @@ const MailWrap = styled.div`
   }
 `;
 
-export { Wrap, Table, MailWrap };
+
+const MemoInput = styled.input`
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+`
+
+export {
+  Wrap,
+  Table,
+  MailWrap,
+  MemoInput
+}
