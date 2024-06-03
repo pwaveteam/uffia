@@ -301,12 +301,18 @@ const Survey = ({ question, setQuestion }: any) => {
   }
 
   
-  return <>{
+  return <Wrapper>{
     duplicateArray.map((duplicateNumber) => {
       return render(duplicateNumber)
     })
-}</>
+}</Wrapper>
 };
+
+const Wrapper = styled.div`
+  display:flex;
+  flex-direction: row;
+  gap: 10rem;
+`
 
 export default Survey;
 

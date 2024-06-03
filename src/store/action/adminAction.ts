@@ -32,11 +32,11 @@ const AdminAction = () => {
                 "item": [
                     {
                         "id": 3,
-                        "part_name": "BST-3L",
+                        "part_name": "MDR-331",
                         "category": "Tank option",
                         "cnt": 0,
-                        "single_amount": 1800000
-                    }
+                        "single_amount": 0
+                    },
                 ],
                 "cnt": 1
             },
@@ -47,7 +47,7 @@ const AdminAction = () => {
                         "part_name": "SPP-1000",
                         "category": "PC PUMP",
                         "cnt": 0,
-                        "single_amount": 16000000
+                        "single_amount": 0
                     },
                 ],
                 "cnt": 1
@@ -56,13 +56,13 @@ const AdminAction = () => {
                 "item": [
                     {
                         "id": 1,
-                        "part_name": "MDR-331",
+                        "part_name": "BST-3L",
                         "category": "BARREL",
                         "cnt": 0,
-                        "single_amount": 75000
+                        "single_amount": 0
                     },
                 ],
-                "cnt": 1
+                "cnt": 2
             },
             "robot": {
                 "item": [
@@ -71,7 +71,7 @@ const AdminAction = () => {
                       "part_name": "BP-2",
                       "category": "BARREL",
                       "cnt": 0,
-                      "single_amount": 100000
+                      "single_amount": 0
                   },
               ],
                 "cnt": 1
@@ -86,8 +86,26 @@ const AdminAction = () => {
                         "part_name": "MDR-331",
                         "category": "데스크탑 로봇",
                         "cnt": 0,
-                        "single_amount": 1800000
-                    }
+                        "single_amount": 0
+                    },{
+                      "id": 4,
+                      "part_name": "Hopper",
+                      "category": "Tank option",
+                      "cnt": 0,
+                      "single_amount": 0
+                  },{
+                    "id": 5,
+                    "part_name": "Load cell",
+                    "category": "Tank option",
+                    "cnt": 0,
+                    "single_amount": 0
+                },{
+                  "id": 5,
+                  "part_name": "TANK 압력 센서",
+                  "category": "Tank option",
+                  "cnt": 0,
+                  "single_amount": 0
+              }
                 ],
                 "cnt": 1
             },
@@ -98,7 +116,7 @@ const AdminAction = () => {
                         "part_name": "BV-303",
                         "category": "일반 벨브",
                         "cnt": 0,
-                        "single_amount": 16000000
+                        "single_amount": 0
                     },
                 ],
                 "cnt": 1
@@ -110,7 +128,7 @@ const AdminAction = () => {
                         "part_name": "BST-5L",
                         "category": "압력탱크",
                         "cnt": 0,
-                        "single_amount": 75000
+                        "single_amount": 0
                     },
                 ],
                 "cnt": 1
@@ -122,7 +140,7 @@ const AdminAction = () => {
                       "part_name": "TAD-200V",
                       "category": "Controller",
                       "cnt": 0,
-                      "single_amount": 100000
+                      "single_amount": 0
                   },
               ],
                 "cnt": 1

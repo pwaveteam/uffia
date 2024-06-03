@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SurveyAction from "../../../store/action/survey";
 import Styles from "../Styles";
 import styled from "styled-components";
@@ -23,9 +23,11 @@ const ConfirmSurvey = () => {
 
   const { sendEmail } = AdminAction();
 
+  const emailRef = useRef(null);
+
   return (
     <>
-      <Styles.ConfirmWrap>
+      <Styles.ConfirmWrap ref={emailRef}>
         <Styles.ConfirmPerson>
           <Title>기본정보</Title>
           <div>
@@ -173,10 +175,21 @@ const ConfirmSurvey = () => {
             width={"200px"}
             bgColor={"#99210e"}
             onClick={async () => {
-              // 누구에게 보내는지,
-              // await sendEmail(email, {
-              //   text: "mockup data",
-              // });
+              const dom: any = emailRef.current;
+                const html = dom.outerHTML;
+
+              await sendEmail(
+                "Banseokdispenser@gmail.com",
+                "자동 견적서",  {
+                  url: `http://localhost:3000/bom/detail/${seq}`,
+                  html,
+              });
+              await sendEmail(
+                "wevyeun@gmail.com",
+                "자동 견적서",  {
+                  url: `http://localhost:3000/bom/detail/${seq}`,
+                  html,
+              });
 
               toast("제출되었습니다");
 

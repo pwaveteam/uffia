@@ -6,7 +6,7 @@ const Styles = {
   }>`
     height: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 10rem;
     justify-content: center;
   `,
