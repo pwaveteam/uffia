@@ -63,7 +63,7 @@ const Index = () => {
 
   let rowIndex = 0;
   let targetRow = 0;
-  const columns = 19;
+  const columns = 13;
 
   const [state, setState] = useState<any>({});
   const [price, setPrice] = useState([0,0,0,0,0]);
@@ -209,14 +209,14 @@ const Index = () => {
                 {firstTd}
                 {secondTd}
                 
-                {new Array(columns - 2).fill(1).map((_, j) => {
+                {new Array(columns + 1).fill(1).map((_, j) => {
                   const current =
                   state.survey[third[currentSecondIndex]]?.item[
                     i - targetRow
                   ];
 
                   if (isSecondTdLastRender) {
-                    if (j === 0) return <td className="bottom" colSpan={columns - 2} key={j}>
+                    if (j === 0) return <td className="bottom" colSpan={columns + 1} key={j}>
                       <MemoInput
                         type={'text'}
                         value={state.survey[third[currentSecondIndex]].memo || ''}
@@ -249,30 +249,29 @@ const Index = () => {
                         </td>
                       case 4:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? '변경' : ''}</td>
+                      
                       case 5:
-                        return <td className="top" key={j}>{isSecondTdFirstRender ? '▽' : ''}</td>
-                      case 7:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? '옵션' : ''}</td>
-                      case 8:
+                      case 6:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? state.survey[third[currentSecondIndex]].cnt : ''}</td>
-                      case 9:
+                      case 7:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? 'EA' : ''}</td>
-                      case 10:
+                      case 8:
                         return <td className="top" key={j} >
                           {isSecondTdFirstRender ? <button onClick={() => handleUpdateStateCnt(third[currentSecondIndex],i - targetRow, 1)}> + </button>
                             : ''}
                         </td>
-                      case 11:
+                      case 9:
                         return <td className="top" key={j} >
                           {isSecondTdFirstRender ? <button onClick={() => handleUpdateStateCnt(third[currentSecondIndex],i - targetRow, -1)} >-</button> : ''}
                         </td>
-                      case 13:
+                      case 10:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? '단가' : ''}</td>
-                      case 14:
+                      case 11:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? (price[currentSecondIndex]).toLocaleString('KO-KR') : ''}</td>
-                      case 15:
+                      case 12:
                         return <td className="top" key={j}>{isSecondTdFirstRender ? '원' : ''}</td>
-                        case 16:
+                        case 13:
                           return (
                             <td className="top" key={j}>
                               <div

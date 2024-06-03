@@ -182,7 +182,7 @@ const ConfirmSurvey = () => {
 
               navigate("/bom/detail/" + seq);
             }}
-            text={"결과보기"}
+            text={"제출하기"}
           />
           </ButtonWrap>
       </ButtonContainer>
