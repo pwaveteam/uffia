@@ -7,7 +7,13 @@ import InputBase from "../../../module/Input";
 import Icon from "../../../module/Icon";
 import SwitchBase from "../../../module/Switch";
 
-const TableColumns = [
+// classification
+// property
+// description
+// keyword
+// id
+
+export const TableColumns = [
   {
     title: "분류",
     dataIndex: "classification",
@@ -24,8 +30,11 @@ const TableColumns = [
               };
             })}
             value={record.classification}
-            onChange={(value: any) => {
-              console.log(value);
+            onChange={(e: any) => {
+              record.updateData(record.index, {
+                ...record,
+                classification: e.target.value,
+              });
             }}
           />
         </Wrapper>
@@ -43,8 +52,11 @@ const TableColumns = [
           <SelectInput
             value={record.property}
             options={propertyOptions}
-            onChange={(value: any) => {
-              console.log(value);
+            onChange={(e: any) => {
+              record.updateData(record.index, {
+                ...record,
+                property: e.target.value,
+              });
             }}
           />
         </Wrapper>
@@ -69,7 +81,10 @@ const TableColumns = [
           <Textarea
             value={record.description}
             onChange={(e: any) => {
-              console.log(e.target.value);
+              record.updateData(record.index, {
+                ...record,
+                description: e.target.value,
+              });
             }}
           />
         </SwitchWrapper>
@@ -78,8 +93,8 @@ const TableColumns = [
   },
   {
     title: "Keyword",
-    dataIndex: "value",
-    key: "value",
+    dataIndex: "keyword",
+    key: "keyword",
     width: "30%",
     render: (text: any, record: any) => {
       return (
@@ -92,9 +107,12 @@ const TableColumns = [
             size="small"
           />
           <Textarea
-            value={record.description}
+            value={record.keyword}
             onChange={(e: any) => {
-              console.log(e.target.value);
+              record.updateData(record.index, {
+                ...record,
+                keyword: e.target.value,
+              });
             }}
           />
         </SwitchWrapper>
@@ -103,8 +121,8 @@ const TableColumns = [
   },
   {
     title: "id",
-    dataIndex: "code",
-    key: "code",
+    dataIndex: "id",
+    key: "id",
     width: "10%",
     render: (text: any, record: any) => {
       return (
@@ -112,7 +130,12 @@ const TableColumns = [
           <Input
             placeholder=""
             value={`${record.typeIndex + 1}-${record.index + 1}`}
-            onChange={(e: any) => {}}
+            onChange={(e: any) => {
+              record.updateData(record.index, {
+                ...record,
+                id: e.target.value,
+              });
+            }}
           />
         </Wrapper>
       );
@@ -186,6 +209,7 @@ type DocumentInfoProps = {
   onClickDelete: () => void;
   onClickAddRow?: () => void;
   onClickDeleteRow?: (rowIndex: number) => void;
+  updateData?: (rowIndex: number, data: any) => void;
 };
 
 const getNumber = (index: number) => {
@@ -199,6 +223,7 @@ const DocumentTable = ({
   onClickDelete,
   onClickAddRow,
   onClickDeleteRow,
+  updateData,
 }: DocumentInfoProps) => {
   const title =
     type === "cover"
@@ -237,6 +262,7 @@ const DocumentTable = ({
                         typeIndex: index,
                         index: _index,
                         onClickDeleteRow,
+                        updateData,
                       })}
                     </TableColumn>
                   ))}
