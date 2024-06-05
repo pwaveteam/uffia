@@ -3,13 +3,15 @@ import styled from "styled-components";
 interface IconInterface {
   icon: string;
   width?: number;
+  height?: number;
 }
 
-const Icon = ({ icon, width }: IconInterface) => {
+const Icon = ({ icon, width, height }: IconInterface) => {
   return (
     <IconImg
       src={`/icon/${icon}.png`}
       width={width}
+      height={height}
       icon={icon}
       alt="no"
     ></IconImg>

@@ -28,7 +28,11 @@ const DefaultLayout = () => {
   const Menu = isAdmin ? AdminMenu : LeftMenu;
 
   if (isUffia) {
-    return <UffiaLayout>asd</UffiaLayout>;
+    return (
+      <UffiaLayout>
+        <Outlet />
+      </UffiaLayout>
+    );
   }
 
   return (

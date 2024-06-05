@@ -2,13 +2,14 @@ import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 const Index = () => {
-  const List = lazy(() => import("./List"));
+  const AiContent = lazy(() => import("./aiContent"));
 
   return (
     <>
       <Suspense>
         <Routes>
-          <Route path={"/list"} element={<List />} />
+          <Route path={"/ai-content"} element={<AiContent />} />
+          <Route path={"/ai-design"} element={<div>디자인 페이지</div>} />
         </Routes>
       </Suspense>
     </>

@@ -93,28 +93,27 @@ const ConfirmSurvey = () => {
           <Title>질문 / 답변</Title>
           {state.answer &&
             Object.entries(state.answer)
-            .sort((a,b) => {
-              const A: any = a;
-              const B: any = b;
-              const [firstA, secondA]= A[1]?.no.split('-').map(Number)
-              const [firstB, secondB]= B[1]?.no.split('-').map(Number)
+              .sort((a, b) => {
+                const A: any = a;
+                const B: any = b;
+                const [firstA, secondA] = A[1]?.no.split("-").map(Number);
+                const [firstB, secondB] = B[1]?.no.split("-").map(Number);
 
-              if(firstA > firstB) {
-                return 1
-              }else if(firstA < firstB) {
-                  return -1
-              }
+                if (firstA > firstB) {
+                  return 1;
+                } else if (firstA < firstB) {
+                  return -1;
+                }
 
-              if(secondA > secondB) {
-                return 1
-              }else if(secondA < secondB) {
-                  return -1
-              }
+                if (secondA > secondB) {
+                  return 1;
+                } else if (secondA < secondB) {
+                  return -1;
+                }
 
-              return 1
-            })
-            .map(
-              ([key, value]: any, idx: number) => {
+                return 1;
+              })
+              .map(([key, value]: any, idx: number) => {
                 return (
                   <div key={idx}>
                     <SurveyInfoTitle>
@@ -133,7 +132,7 @@ const ConfirmSurvey = () => {
                                 key={idx2}
                                 className={"answer"}
                               >
-                                {it.split('@').filter(Boolean).join(',')}
+                                {it.split("@").filter(Boolean).join(",")}
                               </SurveyInfoContent>
                             )}
                           </div>
@@ -142,8 +141,7 @@ const ConfirmSurvey = () => {
                     })}
                   </div>
                 );
-              }
-            )}
+              })}
         </Styles.ConfirmSurvey>
         <Styles.ConfirmETC>
           <Wrapper>
@@ -171,24 +169,20 @@ const ConfirmSurvey = () => {
       </Styles.ConfirmWrap>
       <ButtonContainer>
         <ButtonWrap>
-        <Button
+          <Button
             width={"200px"}
             bgColor={"#99210e"}
             onClick={async () => {
               const dom: any = emailRef.current;
-                const html = dom.outerHTML;
+              const html = dom.outerHTML;
 
-              await sendEmail(
-                "Banseokdispenser@gmail.com",
-                "자동 견적서",  {
-                  url: `http://localhost:3000/bom/detail/${seq}`,
-                  html,
+              await sendEmail("Banseokdispenser@gmail.com", "자동 견적서", {
+                url: `http://localhost:3000/bom/detail/${seq}`,
+                html,
               });
-              await sendEmail(
-                "wevyeun@gmail.com",
-                "자동 견적서",  {
-                  url: `http://localhost:3000/bom/detail/${seq}`,
-                  html,
+              await sendEmail("wevyeun@gmail.com", "자동 견적서", {
+                url: `http://localhost:3000/bom/detail/${seq}`,
+                html,
               });
 
               toast("제출되었습니다");
@@ -197,7 +191,7 @@ const ConfirmSurvey = () => {
             }}
             text={"제출하기"}
           />
-          </ButtonWrap>
+        </ButtonWrap>
       </ButtonContainer>
     </>
   );
@@ -221,7 +215,7 @@ const PersonInfo = styled.div`
   color: #777;
 `;
 
-const RedDot = styled.span`
+export const RedDot = styled.span`
   color: red;
   font-weight: normal;
 `;
@@ -247,10 +241,10 @@ const ButtonContainer = styled.div`
   justify-content: end;
 `;
 
-const ButtonWrap =  styled.div`
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+const ButtonWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 
-    padding-right: 2rem;
-  `
+  padding-right: 2rem;
+`;

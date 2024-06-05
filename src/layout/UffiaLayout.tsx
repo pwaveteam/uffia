@@ -43,7 +43,15 @@ const UffiaLayout = ({ children }: UffiaLayoutProps) => {
   return (
     <DefaultLayoutWrap>
       <Header>
-        <HeaderLogo>Uffia</HeaderLogo>
+        <HeaderLogo>
+          <Img
+            src="/logo/uffiaLogo.svg"
+            alt="logn"
+            onClick={() => {
+              window.location.href = "/regis/0";
+            }}
+          />
+        </HeaderLogo>
         <HeaderLeft>
           <HeaderButton>1:1 문의</HeaderButton>
           <HeaderButton>FTP</HeaderButton>
@@ -57,6 +65,7 @@ const UffiaLayout = ({ children }: UffiaLayoutProps) => {
         {MENU.map((menu, index) => (
           <MenuContainer
             key={index}
+            selected={menu.path === pathname}
             onClick={() => {
               if (menu.path) {
                 // react-router-dom의 Link 컴포넌트를 사용하면 더 좋습니다.
@@ -126,7 +135,7 @@ const IconWrapper = styled.div`
 
 const DefaultLayoutWrap = styled.div`
   width: 100vw;
-  height: 100vh;
+
   display: flex;
   flex-direction: column;
 `;
@@ -138,7 +147,9 @@ const RouteMenu = styled.div`
   height: 7rem;
 `;
 
-const MenuContainer = styled.div`
+const MenuContainer = styled.div<{
+  selected: boolean;
+}>`
   flex: 1;
   display: flex;
   align-items: center;
@@ -151,6 +162,12 @@ const MenuContainer = styled.div`
     cursor: pointer;
     background-color: #3e7aff;
   }
+
+  ${({ selected }) =>
+    selected &&
+    `
+    background-color: #3e7aff;
+  `}
 `;
 
 const BreadCrumb = styled.div`
@@ -175,5 +192,10 @@ const FirstCrumb = styled.div`
 const SecondCrumb = styled.div`
   font-weight: bold;
   font-size: 0.8rem;
-  color: black;
+  color: #636363;
+`;
+
+const Img = styled.img`
+  height: 28px;
+  cursor: pointer;
 `;

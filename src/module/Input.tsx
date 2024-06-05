@@ -17,7 +17,6 @@ type InputProps = {
 const Input = ({ min, ...props }: InputProps) => {
   const setAlert = useSetRecoilState(alertAtom);
 
-  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (props.type === "number") {
@@ -28,7 +27,8 @@ const Input = ({ min, ...props }: InputProps) => {
 
         setAlert({
           isShow: true,
-          content: "죄송합니다. 해당 값은 입력이 불가합니다.\n자세한 내용은 영업사원에게 문의바랍니다.\n다음질문으로 넘어가 주세요",
+          content:
+            "죄송합니다. 해당 값은 입력이 불가합니다.\n자세한 내용은 영업사원에게 문의바랍니다.\n다음질문으로 넘어가 주세요",
         });
         return;
       }
@@ -39,7 +39,8 @@ const Input = ({ min, ...props }: InputProps) => {
 
         setAlert({
           isShow: true,
-          content:  "죄송합니다. 해당 값은 입력이 불가합니다.\n자세한 내용은 영업사원에게 문의바랍니다.\n다음질문으로 넘어가 주세요",
+          content:
+            "죄송합니다. 해당 값은 입력이 불가합니다.\n자세한 내용은 영업사원에게 문의바랍니다.\n다음질문으로 넘어가 주세요",
         });
         return;
       }
@@ -62,8 +63,8 @@ const Container = styled.div``;
 const InputComponent = styled.input`
   width: 100%;
   height: 40px;
+  border-radius: 0.5rem;
   border: 1px solid #e0e0e0;
-  border-radius: 5px;
   padding: 0 10px;
   font-size: 14px;
   color: #333;
