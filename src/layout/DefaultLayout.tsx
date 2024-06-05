@@ -9,6 +9,7 @@ import generatePDF from "react-to-pdf";
 import AdminMenu from "./AdminMenu";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UffiaLayout from "./UffiaLayout";
 
 const DefaultLayout = () => {
   const targetRef = useRef(null);
@@ -21,9 +22,14 @@ const DefaultLayout = () => {
   const isBom = pathname.includes("bom");
   const issubRegis = pathname.includes("subRegis");
   const isDBSystem = pathname.includes("db-system");
+  const isUffia = pathname.includes("uffia");
 
   const isAdmin = isBom || isDBSystem;
   const Menu = isAdmin ? AdminMenu : LeftMenu;
+
+  if (isUffia) {
+    return <UffiaLayout>asd</UffiaLayout>;
+  }
 
   return (
     <DefaultLayoutWrap>
