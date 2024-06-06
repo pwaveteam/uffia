@@ -1,9 +1,4 @@
-import Regis from "../page/regis";
-import subRegis from "../page/subRegis";
 import DefaultLayout from "../layout/DefaultLayout";
-import Confirm from "../page/confirm";
-import Bom from "../page/bom";
-import DBSystem from "../page/dbSystem";
 import Uffia from "../page/uffia";
 
 export interface RouteInterface {
@@ -14,11 +9,6 @@ export interface RouteInterface {
 }
 
 const stepRouter: RouteInterface[] = [
-  { name: "기본 정보", path: "/regis/*", element: Regis },
-  { name: "최종 페이지", path: "/subRegis/*", element: subRegis },
-  { name: "결과 페이지", path: "/confirm/*", element: Confirm },
-  { name: "결과 페이지", path: "/bom/*", element: Bom },
-  { name: "DB System", path: "/db-system/*", element: DBSystem },
   { name: "uttia", path: "/uffia/*", element: Uffia },
 ];
 

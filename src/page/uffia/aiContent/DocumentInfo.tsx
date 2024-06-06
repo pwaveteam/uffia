@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Textarea from "../../../module/Textarea";
-import { RedDot } from "../../confirm/page/ConfirmSurvey";
 import SelectInput from "../../../module/SelectInput";
 import Switch from "../../../module/Switch";
 import { useState } from "react";
@@ -175,4 +174,9 @@ const ButtonWrapper = styled.div`
   justify-content: end;
   padding-top: 2.5rem;
   padding-bottom: 1.5rem;
+`;
+
+const RedDot = styled.span`
+  color: red;
+  font-weight: normal;
 `;
