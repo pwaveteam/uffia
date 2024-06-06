@@ -12,15 +12,20 @@ const DescriptionItem = ({
     <ItemContainer>
       <Title isFirst={isFirst}>{title}</Title>
       <Options>
-        {options.slice(0, totalRows).map((optionRow: any, rowIndex: any) => {
+        {options.map((optionRow: any, rowIndex: any) => {
           const selectedValue =
             totalRows === 1
               ? selectedOptions[title]
               : selectedOptions[title + "_" + rowIndex];
 
+          const optionRow2 =
+            typeof optionRow === "function"
+              ? optionRow(selectedOptions)
+              : optionRow;
+
           return (
             <Rows key={rowIndex} isFirst={isFirst && rowIndex === 0}>
-              {optionRow.map((option: any, index: any) => (
+              {optionRow2.map((option: any, index: any) => (
                 <Option
                   isFirst={isFirst && rowIndex === 0}
                   key={index}

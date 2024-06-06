@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import ContentHeader from "./ContentHeader";
@@ -12,7 +12,15 @@ const MockDescriptionData = [
     totalRows: 2,
     options: [
       ["모션데스크", "mobjet series"],
-      ["콤비장", "수납장", "1단", "2단", "3단"],
+      (selectedOptions: any) => {
+        if (selectedOptions["가구 카테고리_0"] === "모션데스크") {
+          return ["옵션1", "옵션2", "옵션3", "옵션4"];
+        } else if (selectedOptions["가구 카테고리_0"] === "mobjet series") {
+          return ["옵션1", "옵션2", "옵션3"];
+        } else {
+          return [];
+        }
+      },
     ],
   },
   {
@@ -40,7 +48,7 @@ const MockDescriptionData = [
 const AiContent = () => {
   const [documentName, setDocumentName] = useState("컨텐츠 1");
 
-  const [image, setImage] = useState("/icon/plus.png");
+  const [image, setImage] = useState("");
 
   const [selectedOptions, setSelectedOptions] = useState<any>({
     "가구 카테고리_0": "모션데스크",
@@ -51,6 +59,44 @@ const AiContent = () => {
     "사진구도 변경": "옵션5",
   });
 
+  useEffect(() => {
+    if (
+      selectedOptions["가구 카테고리_0"] === "mobjet series" &&
+      selectedOptions["가구 카테고리_1"] === "옵션4"
+    ) {
+      console.log("옵션3으로 변경");
+      setSelectedOptions((prev: any) => {
+        const newSelectedOptions = { ...prev };
+        newSelectedOptions["가구 카테고리_1"] = "옵션1";
+        return newSelectedOptions;
+      });
+    }
+  }, [selectedOptions]);
+
+  useEffect(() => {
+    if (
+      selectedOptions["가구 카테고리_0"] &&
+      selectedOptions["가구 카테고리_1"]
+    ) {
+      const firstPath =
+        selectedOptions["가구 카테고리_0"] === "모션데스크"
+          ? "/motiondesk"
+          : "/mobjetseries";
+      const secondPath =
+        selectedOptions["가구 카테고리_1"] === "옵션1"
+          ? "/option1.png"
+          : selectedOptions["가구 카테고리_1"] === "옵션2"
+          ? "/option2.png"
+          : selectedOptions["가구 카테고리_1"] === "옵션3"
+          ? "/option3.png"
+          : "/option4.png";
+      setImage(process.env.PUBLIC_URL + "/dummy" + firstPath + secondPath);
+      return;
+    }
+
+    setImage("");
+  }, [selectedOptions]);
+
   const saveData = () => {
     toast("복사되었습니다.");
   };
@@ -60,7 +106,7 @@ const AiContent = () => {
 
     const link = document.createElement("a");
     link.setAttribute("download", "image.png");
-    link.href = process.env.PUBLIC_URL + "/createdImage/image.png";
+    link.href = image;
     link.click();
   };
 
@@ -121,7 +167,7 @@ const AiContent = () => {
               ))}
             </SelectedOptionsViewer>
             <ImageViewer>
-              <img src="/createdImage/image.png" alt="image" />
+              {image && <img src={image} alt="motiondesk" />}
             </ImageViewer>
           </ImageViewerContainer>
         </ImageContainer>
@@ -164,6 +210,7 @@ const ButtonContainer = styled.div`
 
 const ImageViewerContainer = styled.div`
   border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
 `;
 
 const SelectedOptionsViewer = styled.div`
@@ -171,7 +218,6 @@ const SelectedOptionsViewer = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  border-bottom: 1px solid black;
 
   background-color: #f0f6ff;
   height: 4rem;
