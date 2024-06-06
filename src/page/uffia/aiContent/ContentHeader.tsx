@@ -15,7 +15,7 @@ const ContentHeader = ({
   return (
     <HeaderContainer>
       <Header>
-        <Title>AI 컨텐츠 관리</Title>
+        <Title>제안서 관리</Title>
         <AiToggleWrapper>
           <SwitchLabel checked={!checked}> 끔</SwitchLabel>
           <Switch checked={checked} onChange={() => setChecked(!checked)} />
@@ -61,7 +61,7 @@ const Header = styled.div`
 
 const Title = styled.div`
   width: 150px;
-  color: black;
+  color: #333333;
   font-size: 1.25rem;
   font-weight: bold;
 

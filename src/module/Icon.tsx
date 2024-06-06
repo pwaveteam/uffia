@@ -4,9 +4,10 @@ interface IconInterface {
   icon: string;
   width?: number;
   height?: number;
+  onClick?: () => void;
 }
 
-const Icon = ({ icon, width, height }: IconInterface) => {
+const Icon = ({ icon, width, height, onClick }: IconInterface) => {
   return (
     <IconImg
       src={`/icon/${icon}.png`}
@@ -14,6 +15,7 @@ const Icon = ({ icon, width, height }: IconInterface) => {
       height={height}
       icon={icon}
       alt="no"
+      onClick={onClick}
     ></IconImg>
   );
 };

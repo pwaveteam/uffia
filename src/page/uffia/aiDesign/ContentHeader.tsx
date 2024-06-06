@@ -43,8 +43,9 @@ const HeaderContainer = styled.div`
   padding-top: 3rem;
   display: flex;
   align-items: center;
-  margin: auto;
-  min-width: 1300px;
+
+  padding-left: 10rem;
+  padding-right: 10rem;
 `;
 
 const Header = styled.div`
@@ -60,7 +61,7 @@ const Header = styled.div`
 
 const Title = styled.div`
   width: 150px;
-  color: black;
+  color: #333333;
   font-size: 1.25rem;
   font-weight: bold;
 

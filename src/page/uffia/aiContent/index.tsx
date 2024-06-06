@@ -377,14 +377,14 @@ A-2. 프로젝트 조직도`,
           <EmptySpace />
           <TableHeader>
             <Button
-              text="표지 추가"
+              text="커버 추가"
               variant="uffia"
               onClick={() => {
                 handleClickAddCover();
               }}
             />
             <Button
-              text="내용 추가"
+              text="페이지 추가"
               variant="secondary"
               onClick={() => {
                 handleClickAddContent();

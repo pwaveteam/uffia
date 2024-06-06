@@ -6,8 +6,8 @@ import { useState } from "react";
 import Button from "../../../module/UffiaButton";
 
 const DocumentTypeOptions = [
-  { value: "사무용 가구", label: "사무용 가구" },
-  { value: "공부용 가구", label: "공부용 가구" },
+  { value: "프로젝트 1", label: "프로젝트 1" },
+  { value: "프로젝트 2", label: "프로젝트 2" },
 ];
 
 /*
@@ -64,6 +64,11 @@ const DocumentInfo = () => {
         <span>
           개요<RedDot>*</RedDot>
         </span>
+        <Switch
+          size="small"
+          checked={checked}
+          onChange={() => setChecked(!checked)}
+        />
       </InfoTitle>
       <Textarea
         value={description}
@@ -105,11 +110,11 @@ const DocumentInfo = () => {
       <ButtonWrapper>
         <Button
           size={"large"}
-          variant="uffia"
-          text="저장하기"
+          variant="primary"
+          text="첨부파일 업로드"
           style={{
             fontSize: "1rem",
-            padding: "0.5rem 3.5rem",
+            padding: "0.5rem 2.5rem",
           }}
         />
       </ButtonWrapper>
@@ -119,6 +124,11 @@ const DocumentInfo = () => {
 
 export default DocumentInfo;
 const DocumentInfoContainer = styled.div`
+  // sticky
+  position: -webkit-sticky;
+  position: sticky;
+  top: 1rem;
+
   width: 320px;
   height: fit-content;
 
