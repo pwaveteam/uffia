@@ -57,29 +57,35 @@ const dataStyle = {
 };
 
 const defaultCoverData = {
-  type: "표지",
-  index: 0,
-  tableData: [
-    {
-      classification: "대분류",
-      property: "회사 머리말",
-      description: `Pangyo 10X Project
-Design Furniture Proposal`,
-      keyword: "-",
-    },
-    {
-      classification: "중분류",
-      property: "요약",
-      description: `Vol1. Mar-2024 Proposed by uffia`,
-      keyword: "문서, 가치, 공간컨셉, 창의적",
-    },
-    {
-      classification: "소분류",
-      property: "날짜",
-      description: "Mar, 2023",
-      keyword: "오늘 날짜",
-    },
-  ],
+type: "표지",
+index: 0,
+tableData: [
+{
+classification: "대분류",
+property: "회사 머리말",
+description: `Pulsewave X uffia Project
+AI Soltuion by Business Flow`,
+keyword: "RFP",
+},
+{
+classification: "중분류",
+property: "고객명",
+description: `Pulsewave`,
+keyword: "RFP",
+},
+{
+classification: "소분류",
+property: "설명",
+description: "Vol.1 June-2024 Proposed by PV inc.",
+keyword: "RFP",
+},
+{
+classification: "소분류",
+property: "날짜",
+description: "June, 2024",
+keyword: "RFP",
+},
+],
 };
 
 const defaultContentData = {
@@ -88,21 +94,9 @@ const defaultContentData = {
   tableData: [
     {
       classification: "대분류",
-      property: "회사 머리말",
-      description: `C. 가구 제안/2/ 제안 품목`,
-      keyword: "",
-    },
-    {
-      classification: "대분류",
       property: "설명",
-      description: `3F`,
+      description: ``,
       keyword: "",
-    },
-    {
-      classification: "대분류",
-      property: "설명",
-      description: `Entrance / 대기공간`,
-      keyword: "-",
     },
   ],
 };
@@ -111,77 +105,112 @@ const AiContent = () => {
   const [documentName, setDocumentName] = useState("프로젝트1");
   const [coverData, setCoverData] = useState<any>([defaultCoverData]);
 
-  const [contentData, setContentData] = useState<any>([
-    {
-      type: "내용",
-      index: 1,
-      tableData: [
-        {
-          classification: "대분류",
-          property: "회사 머리말",
-          description: `A. 회사 소개`,
-          keyword: "",
-        },
-        {
-          classification: "중분류",
-          property: "회사 머리말",
-          description: `A-1. 회사 소개
-A-2. 프로젝트 조직도`,
-          keyword: "-",
-        },
-      ],
-    },
-    defaultContentData,
-    {
-      type: "내용",
-      index: 1,
-      tableData: [
-        {
-          classification: "대분류",
-          property: "회사 머리말",
-          description: `C. 가구 제안/2/ 제안 품목`,
-          keyword: "",
-        },
-        {
-          classification: "대분류",
-          property: "설명",
-          description: `5, 6F`,
-          keyword: "",
-        },
-        {
-          classification: "대분류",
-          property: "설명",
-          description: `Cofee chat RM / canteen / Huddle RM`,
-          keyword: "-",
-        },
-      ],
-    },
-    {
-      type: "내용",
-      index: 1,
-      tableData: [
-        {
-          classification: "대분류",
-          property: "제품명",
-          description: `Layer series`,
-          keyword: "",
-        },
-        {
-          classification: "대분류",
-          property: "요약",
-          description: `공간의 깊이를 더하다`,
-          keyword: "",
-        },
-        {
-          classification: "대분류",
-          property: "설명",
-          description: `다양한 톤의 Mix & Match로 조화로운 인테리어 연출이 가능한 레이어 시리즈
-수납공간의 새로운 층을 만들어내는 레이어 시리즈를 만나보세요!`,
-          keyword: "-",
-        },
-      ],
-    },
-  ]);
+const [contentData, setContentData] = useState<any>([
+{
+type: "내용",
+index: 1,
+tableData: [
+{
+classification: "대분류",
+property: "설명",
+description: ``,
+keyword: "",
+},
+],
+},
+defaultContentData,
+{
+type: "내용",
+index: 1,
+tableData: [
+{
+classification: "대분류",
+property: "회사 머리말",
+description: `B. 가구 컨설팅 및 납품 계획`,
+keyword: "",
+},
+{
+classification: "중분류",
+property: "설명",
+description: `B-1. 컨설팅 진행 계획`,
+keyword: "",
+},
+{
+classification: "중분류",
+property: "설명",
+description: `B-2. 프로젝트 진행 계획 (납품계획)`,
+keyword: "",
+},
+{
+classification: "중분류",
+property: "고객명",
+description: `B-3. 일정 계획`,
+keyword: "",
+},
+{
+classification: "중분류",
+property: "고객명",
+description: `B-4. 품질 보증 및 사후 관리`,
+keyword: "",
+},
+],
+},
+{
+type: "내용",
+index: 1,
+tableData: [
+{
+classification: "중분류",
+property: "설명",
+description: `공간 컨셉에 대한 스토리 및 디자인 의도 파악`,
+keyword: "공간, 여행, 컨셉",
+},
+{
+classification: "소분류",
+property: "설명",
+description: `공간별로 여행에서 느끼는 점을 어떻게 표현하였는가?`,
+keyword: "공간, 여행, 컨셉",
+},
+],
+},
+{
+type: "내용",
+index: 1,
+tableData: [
+{
+classification: "중분류",
+property: "설명",
+description: `총 16개 층(B2~14F)`,
+keyword: "RFP, 제안 범위",
+},
+{
+classification: "소분류",
+property: "설명",
+description: `고품질 디자인 가구를 통해 공간의 미적
+가치를 극대화하고,
+사용자 편의성과 기능성을 향상`,
+keyword: "RFP, 과업의 목적",
+},
+{
+classification: "소분류",
+property: "설명",
+description: `여행의 편안함과 설렘을 느낄 수 있는 공간 창출
+사용자 경험을 극대화하기 위해 맞춤형 가구 제작,
+고품질 마감재 선택 및 최신 인테리어 트렌드 반영`,
+keyword: "RFP, 과업의 이해",
+},
+{
+classification: "소분류",
+property: "설명",
+description: `독창적인 디자인과 고객 맞춤형
+접근 방식을 통한 설계
+직원들의 일상 공간을 더욱 특별하고
+기능적으로 설계하여, 사용자 만족도 극대화`,
+keyword: "RFP, 과업의 기대효과",
+},
+],
+},
+]);
 
   const exportData = () => {
     const wb = XLSX.utils.book_new();
