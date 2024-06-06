@@ -241,7 +241,7 @@ const DocumentTable = ({
             text="행추가"
             onClick={onClickAddRow}
             style={{
-              width: "50px",
+              width: "70px",
             }}
           />
           <TableContainer>
@@ -286,7 +286,7 @@ const TableHeader = styled.div`
   display: flex;
   gap: 0.25rem;
   color: #fff;
-  font-size: 0.75rem;
+  font-size: 1rem;
 `;
 
 const TableHeaderColumn = styled.div<{ type: string; width: string }>`
@@ -334,7 +334,6 @@ const DocumentTableContainer = styled.div`
   border-radius: 0.5rem;
 
   padding: 0 1rem 1rem 1rem;
-  min-width: 850px;
 `;
 
 const Header = styled.div`
@@ -370,6 +369,6 @@ const Wrapper = styled.div`
 `;
 
 const Input = styled(InputBase)`
-  height: 2.8rem;
+  height: 44px;
   color: #8e8e8e;
 `;

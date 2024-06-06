@@ -48,7 +48,7 @@ const InputWrapper = styled.div`
 
 const TextareaInput = styled.textarea`
   width: 100%;
-  // height: 100px;
+  min-height: 44px;
 
   border-radius: 0.5rem;
   border: 1px solid #e0e0e0;

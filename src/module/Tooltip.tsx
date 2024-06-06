@@ -53,7 +53,7 @@ const Container = styled.span`
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     border-radius: 5px;
 
-    font-size: 12px;
+    font-size: 1rem;
     font-weight: 500;
     height: auto;
     letter-spacing: -0.25px;

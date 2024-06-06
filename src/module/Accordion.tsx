@@ -50,7 +50,7 @@ const AccordionTitle = styled.div<{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: #fff;
   padding: 1rem;
   cursor: pointer;

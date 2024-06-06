@@ -101,7 +101,7 @@ const Header = styled.div`
 const HeaderLogo = styled.div`
   color: white;
   font-size: 1.5rem;
-  padding: 0 3rem;
+  padding: 0 5rem;
   display: flex;
   align-items: center;
 `;
@@ -110,6 +110,7 @@ const HeaderLeft = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  padding-right: 3rem;
 `;
 
 const HeaderButton = styled.div`
@@ -145,6 +146,7 @@ const RouteMenu = styled.div`
   align-items: center;
   flex-direction: row;
   height: 7rem;
+  font-size: 1.25rem;
 `;
 
 const MenuContainer = styled.div<{
@@ -182,7 +184,7 @@ const BreadCrumb = styled.div`
 
 const FirstCrumb = styled.div`
   font-weight: bold;
-  font-size: 0.8rem;
+  font-size: 1rem;
   &:hover {
     cursor: pointer;
     color: #3e7aff;
@@ -191,7 +193,7 @@ const FirstCrumb = styled.div`
 
 const SecondCrumb = styled.div`
   font-weight: bold;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #636363;
 `;
 

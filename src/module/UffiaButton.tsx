@@ -53,11 +53,11 @@ const Container = styled.div<{
   font-size: ${(props) => {
     switch (props.size) {
       case "small":
-        return "0.75rem";
-      case "medium":
         return "1rem";
-      case "large":
+      case "medium":
         return "1.25rem";
+      case "large":
+        return "1.5rem";
     }
   }};
 `;

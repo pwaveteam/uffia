@@ -32,6 +32,7 @@ const SelectWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  width: 100%;
 `;
 
 const Label = styled.label`

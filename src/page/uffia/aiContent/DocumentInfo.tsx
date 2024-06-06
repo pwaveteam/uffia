@@ -152,7 +152,7 @@ const KeywordShortcut = styled.div<{
 }>`
   padding: 0.25rem 0.5rem;
 
-  font-size: 0.75rem;
+  font-size: 1rem;
   border: 1px solid #636363;
   border-radius: 0.25rem;
   color: #636363;

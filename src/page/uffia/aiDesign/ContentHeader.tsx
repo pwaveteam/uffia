@@ -15,7 +15,7 @@ const ContentHeader = ({
   return (
     <HeaderContainer>
       <Header>
-        <Title>AI 컨텐츠 관리</Title>
+        <Title>디자인 컨텐츠 관리</Title>
         <AiToggleWrapper>
           <SwitchLabel checked={!checked}> 끔</SwitchLabel>
           <Switch checked={checked} onChange={() => setChecked(!checked)} />
@@ -43,9 +43,8 @@ const HeaderContainer = styled.div`
   padding-top: 3rem;
   display: flex;
   align-items: center;
-
-  padding-left: 10rem;
-  padding-right: 10rem;
+  margin: auto;
+  min-width: 1300px;
 `;
 
 const Header = styled.div`

@@ -489,6 +489,7 @@ const TableHeader = styled.div`
 
 const DocumentContent = styled.div`
   display: flex;
+
   flex-direction: row;
   gap: 1.5rem;
 
@@ -500,6 +501,7 @@ const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  flex: 1;
 `;
 
 const ButtonContainer = styled.div`
@@ -510,5 +512,6 @@ const ButtonContainer = styled.div`
 `;
 
 const Wrapper = styled.div`
-  margin: 0 auto;
+  padding-left: 10rem;
+  padding-right: 10rem;
 `;
