@@ -121,6 +121,7 @@ const DocumentInfo = () => {
 export default DocumentInfo;
 const DocumentInfoContainer = styled.div`
   width: 320px;
+  height: fit-content;
 
   padding-top: 1.5rem;
   padding-left: 1.5rem;

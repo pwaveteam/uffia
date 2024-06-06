@@ -18,7 +18,7 @@ export const TableColumns = [
     title: "분류",
     dataIndex: "classification",
     key: "classification",
-    width: "15%",
+    width: "12%",
     render: (text: any, record: any) => {
       return (
         <Wrapper>
@@ -67,7 +67,7 @@ export const TableColumns = [
     title: "내용",
     dataIndex: "description",
     key: "description",
-    width: "30%",
+    width: "40%",
     render: (text: any, record: any) => {
       return (
         <SwitchWrapper>
@@ -123,7 +123,7 @@ export const TableColumns = [
     title: "id",
     dataIndex: "id",
     key: "id",
-    width: "10%",
+    width: "7%",
     render: (text: any, record: any) => {
       return (
         <Wrapper>
@@ -145,7 +145,7 @@ export const TableColumns = [
     title: "편집",
     dataIndex: "delete",
     key: "delete",
-    width: "10%",
+    width: "5%",
     render: (text: any, record: any) => {
       return (
         <Wrapper
@@ -334,7 +334,7 @@ const DocumentTableContainer = styled.div`
   border-radius: 0.5rem;
 
   padding: 0 1rem 1rem 1rem;
-  min-width: 1200px;
+  min-width: 850px;
 `;
 
 const Header = styled.div`

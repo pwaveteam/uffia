@@ -10,11 +10,11 @@ type UffiaLayoutProps = {
 
 const MENU = [
   {
-    name: "AI 컨텐츠 관리",
+    name: "제안서 관리",
     path: "/uffia/ai-content",
   },
   {
-    name: "AI 디자인 관리",
+    name: "디자인 컨텐츠 관리",
     path: "/uffia/ai-design",
   },
   {

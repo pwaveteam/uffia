@@ -2,35 +2,53 @@ import { useState } from "react";
 import Switch from "../../../module/Switch";
 import styled from "styled-components";
 
-const ContentHeader = () => {
+type ContentHeaderProps = {
+  documentName: string;
+  onChangeDocumentName: (documentName: string) => void;
+};
+
+const ContentHeader = ({
+  documentName,
+  onChangeDocumentName,
+}: ContentHeaderProps) => {
   const [checked, setChecked] = useState(false);
-  const [documentName, setDocumentName] = useState("프로젝트1");
   return (
-    <Header>
-      <Title>AI 컨텐츠 관리</Title>
-      <AiToggleWrapper>
-        <SwitchLabel checked={!checked}> 끔</SwitchLabel>
-        <Switch checked={checked} onChange={() => setChecked(!checked)} />
-        <SwitchLabel checked={checked}>AI 사용</SwitchLabel>
-      </AiToggleWrapper>
-      <DocumentContainer>
-        <DocumentWrapper>
-          <DocumentTitle>문서명</DocumentTitle>
-          <UnderLineInput
-            value={documentName}
-            onChange={(e) => {
-              setDocumentName(e.target.value);
-            }}
-          />
-        </DocumentWrapper>
-      </DocumentContainer>
-    </Header>
+    <HeaderContainer>
+      <Header>
+        <Title>AI 컨텐츠 관리</Title>
+        <AiToggleWrapper>
+          <SwitchLabel checked={!checked}> 끔</SwitchLabel>
+          <Switch checked={checked} onChange={() => setChecked(!checked)} />
+          <SwitchLabel checked={checked}>AI 사용</SwitchLabel>
+        </AiToggleWrapper>
+        <DocumentContainer>
+          <DocumentWrapper>
+            <DocumentTitle>문서명</DocumentTitle>
+            <UnderLineInput
+              value={documentName}
+              onChange={(e) => {
+                onChangeDocumentName(e.target.value);
+              }}
+            />
+          </DocumentWrapper>
+        </DocumentContainer>
+      </Header>
+    </HeaderContainer>
   );
 };
 
 export default ContentHeader;
 
+const HeaderContainer = styled.div`
+  padding-top: 3rem;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  min-width: 1300px;
+`;
+
 const Header = styled.div`
+  width: 100%;
   height: 1.5rem;
   border-bottom: 1px solid #e0e0e0;
   display: flex;
@@ -48,7 +66,8 @@ const Title = styled.div`
 
   display: flex;
   align-items: center;
-  margin-right: 3rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
 `;
 
 const AiToggleWrapper = styled.div`

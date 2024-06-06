@@ -53,6 +53,6 @@ const TextareaInput = styled.textarea`
   border-radius: 0.5rem;
   border: 1px solid #e0e0e0;
   resize: none;
-  padding: 14px;
+  padding: 10px;
   box-sizing: border-box;
 `;

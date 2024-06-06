@@ -7,124 +7,225 @@ import Button from "../../../module/UffiaButton";
 import { toast } from "react-toastify";
 import XLSX from "xlsx-js-style";
 
-const AiContent = () => {
-  const [coverData, setCoverData] = useState<any>([
+const pastelColors = [
+  "FFB3BA",
+  "FFDFBA",
+  "FFFFBA",
+  "BAFFC9",
+  "BAE1FF",
+  "CBAACB",
+  "FFCCE5",
+  "D4A5A5",
+  "A5D4A5",
+  "A5A5D4",
+];
+
+const genHeaderStyle = (idx: number) => {
+  return {
+    ...headerStyle,
+    fill: { fgColor: { rgb: pastelColors[idx % pastelColors.length] } },
+  };
+};
+
+const headerStyle = {
+  font: {
+    bold: true,
+    color: { rgb: "000000" },
+    name: "함초롱바탕",
+    sz: 13,
+  },
+  fill: { fgColor: { rgb: "BC8F8F" } },
+  alignment: { horizontal: "center", vertical: "center" },
+  border: {
+    left: { style: "thin", color: { auto: 1 } },
+    right: { style: "thin", color: { auto: 1 } },
+    top: { style: "thin", color: { auto: 1 } },
+    bottom: { style: "thin", color: { auto: 1 } },
+  },
+};
+
+const dataStyle = {
+  font: { color: { rgb: "000000" }, name: "함초롱바탕", sz: 11 },
+  fill: { fgColor: { rgb: "FFFAFA" } },
+  alignment: { horizontal: "center", vertical: "center" },
+  border: {
+    left: { style: "thin", color: { auto: 1 } },
+    right: { style: "thin", color: { auto: 1 } },
+    top: { style: "thin", color: { auto: 1 } },
+    bottom: { style: "thin", color: { auto: 1 } },
+  },
+};
+
+const defaultCoverData = {
+  type: "표지",
+  index: 0,
+  tableData: [
     {
-      type: "표지",
-      index: 0,
-      tableData: [
-        {
-          classification: "대분류",
-          property: "고객명",
-          description: "네이버",
-          keyword: "-",
-        },
-        {
-          classification: "중분류",
-          property: "회사 머리말",
-          description:
-            "사용자의 업장을 가장 깊이 있게 고민하고 기업의 문화라치를 실현시킬 수 있는 공간을 창출합니다. 여러 고객 접점을 다양한 방식으로",
-          keyword: "문서, 가치, 공간컨셉, 창의적",
-        },
-        {
-          classification: "소분류",
-          property: "날짜",
-          description: "2024.06.05",
-          keyword: "오늘 날짜",
-        },
-      ],
+      classification: "대분류",
+      property: "회사 머리말",
+      description: `Pangyo 10X Project
+Design Furniture Proposal`,
+      keyword: "-",
     },
-  ]);
+    {
+      classification: "중분류",
+      property: "요약",
+      description: `Vol1. Mar-2024 Proposed by uffia`,
+      keyword: "문서, 가치, 공간컨셉, 창의적",
+    },
+    {
+      classification: "소분류",
+      property: "날짜",
+      description: "Mar, 2023",
+      keyword: "오늘 날짜",
+    },
+  ],
+};
+
+const defaultContentData = {
+  type: "내용",
+  index: 1,
+  tableData: [
+    {
+      classification: "대분류",
+      property: "회사 머리말",
+      description: `C. 가구 제안/2/ 제안 품목`,
+      keyword: "",
+    },
+    {
+      classification: "대분류",
+      property: "설명",
+      description: `3F`,
+      keyword: "",
+    },
+    {
+      classification: "대분류",
+      property: "설명",
+      description: `Entrance / 대기공간`,
+      keyword: "-",
+    },
+  ],
+};
+
+const AiContent = () => {
+  const [documentName, setDocumentName] = useState("프로젝트1");
+  const [coverData, setCoverData] = useState<any>([defaultCoverData]);
 
   const [contentData, setContentData] = useState<any>([
     {
       type: "내용",
       index: 1,
-      tableData: [{}, {}, {}],
+      tableData: [
+        {
+          classification: "대분류",
+          property: "회사 머리말",
+          description: `A. 회사 소개`,
+          keyword: "",
+        },
+        {
+          classification: "중분류",
+          property: "회사 머리말",
+          description: `A-1. 회사 소개
+A-2. 프로젝트 조직도`,
+          keyword: "-",
+        },
+      ],
+    },
+    defaultContentData,
+    {
+      type: "내용",
+      index: 1,
+      tableData: [
+        {
+          classification: "대분류",
+          property: "회사 머리말",
+          description: `C. 가구 제안/2/ 제안 품목`,
+          keyword: "",
+        },
+        {
+          classification: "대분류",
+          property: "설명",
+          description: `5, 6F`,
+          keyword: "",
+        },
+        {
+          classification: "대분류",
+          property: "설명",
+          description: `Cofee chat RM / canteen / Huddle RM`,
+          keyword: "-",
+        },
+      ],
+    },
+    {
+      type: "내용",
+      index: 1,
+      tableData: [
+        {
+          classification: "대분류",
+          property: "제품명",
+          description: `Layer series`,
+          keyword: "",
+        },
+        {
+          classification: "대분류",
+          property: "요약",
+          description: `공간의 깊이를 더하다`,
+          keyword: "",
+        },
+        {
+          classification: "대분류",
+          property: "설명",
+          description: `다양한 톤의 Mix & Match로 조화로운 인테리어 연출이 가능한 레이어 시리즈
+수납공간의 새로운 층을 만들어내는 레이어 시리즈를 만나보세요!`,
+          keyword: "-",
+        },
+      ],
     },
   ]);
 
   const exportData = () => {
     const wb = XLSX.utils.book_new();
-    const headerStyle = {
-      font: {
-        bold: true,
-        color: { rgb: "000000" },
-        name: "함초롱바탕",
-        sz: 13,
+
+    const headerRow = [...coverData, ...contentData].reduce(
+      (acc: any, cur: any, idx_1) => {
+        const row = cur.tableData.map((_: any, idx_2: any) => {
+          return {
+            v: `${idx_1 + 1}-${idx_2 + 1}`,
+            t: "s",
+            s: genHeaderStyle(idx_1),
+          };
+        });
+        return [...acc, ...row];
       },
-      fill: { fgColor: { rgb: "BC8F8F" } },
-      alignment: { horizontal: "center", vertical: "center" },
-      border: {
-        left: { style: "thin", color: { auto: 1 } },
-        right: { style: "thin", color: { auto: 1 } },
-        top: { style: "thin", color: { auto: 1 } },
-        bottom: { style: "thin", color: { auto: 1 } },
-      },
-    };
-    const dataStyle = {
-      font: { color: { rgb: "000000" }, name: "함초롱바탕", sz: 11 },
-      fill: { fgColor: { rgb: "FFFAFA" } },
-      alignment: { horizontal: "center", vertical: "center" },
-      border: {
-        left: { style: "thin", color: { auto: 1 } },
-        right: { style: "thin", color: { auto: 1 } },
-        top: { style: "thin", color: { auto: 1 } },
-        bottom: { style: "thin", color: { auto: 1 } },
-      },
-    };
-
-    // 열의 폭을 정의
-    const colWidths = [80, 120, 300, 80, 30];
-
-    // cols 속성을 사용하여 각 열의 폭을 조절
-    const cols = colWidths.map((width) => ({ wpx: width }));
-
-    const headerRow = [
-      { v: "분류", t: "s", s: headerStyle },
-      { v: "항목 속성", t: "s", s: headerStyle },
-      { v: "내용", t: "s", s: headerStyle },
-      { v: "키워드", t: "s", s: headerStyle },
-      { v: "ID", t: "s", s: headerStyle },
-    ];
-
-    const flattenCoverData = coverData.reduce(
-      (acc: any, cur: any) => [...acc, ...cur.tableData],
-      []
-    );
-    const flattenContentData = contentData.reduce(
-      (acc: any, cur: any) => [...acc, ...cur.tableData],
       []
     );
 
-    // classification
-    // property
-    // description
-    // keyword
-    // id
-    const dataRows = [...flattenCoverData, ...flattenContentData].map(
-      (data: any) => [
-        { v: data.classification, t: "s", s: dataStyle }, // 사원번호
-        { v: data.property, t: "s", s: dataStyle }, // 이름
-        { v: data.description, t: "s", s: dataStyle }, // 부서
-        { v: data.keyword, t: "s", s: dataStyle }, // 직급
-        { v: data.id, t: "s", s: dataStyle }, // 사원번호
-      ]
+    const dataRows = [...coverData, ...contentData].reduce(
+      (acc: any, cur: any) => {
+        return [
+          ...acc,
+          ...cur.tableData.map((data: any) => {
+            return { v: data.description, t: "s", s: dataStyle };
+          }),
+        ];
+      },
+      []
     );
 
-    const rows = [headerRow, ...dataRows];
+    const rows = [headerRow, dataRows];
 
     // 새로운 Sheet 객체 생성
     const ws = XLSX.utils.aoa_to_sheet(rows);
 
-    // cols 속성 적용
+    const colWidths = headerRow.map((_: any) => 140);
+    const cols = colWidths.map((width: any) => ({ wpx: width }));
     ws["!cols"] = cols;
 
     // workbook에 추가
     XLSX.utils.book_append_sheet(wb, ws, "사원 목록");
 
     // 파일 다운로드
-    XLSX.writeFile(wb, "ai_content_list.xlsx");
+    XLSX.writeFile(wb, `${documentName}.xlsx`);
   };
 
   const saveData = () => {
@@ -132,34 +233,12 @@ const AiContent = () => {
   };
 
   const handleClickAddCover = () => {
-    const newCoverData = {
-      type: "표지",
-      index: coverData.length,
-      tableData: [
-        {
-          // name: "표지_01",
-          // description: "표지_01",
-          // value: "표지_01",
-          // code: "표지_01",
-        },
-      ],
-    };
+    const newCoverData = defaultCoverData;
     setCoverData([...coverData, newCoverData]);
   };
 
   const handleClickAddContent = () => {
-    const newContentData = {
-      type: "내용",
-      index: contentData.length,
-      tableData: [
-        {
-          // name: "내용_01",
-          // description: "내용_01",
-          // value: "내용_01",
-          // code: "내용_01",
-        },
-      ],
-    };
+    const newContentData = defaultContentData;
     setContentData([...contentData, newContentData]);
   };
 
@@ -287,110 +366,96 @@ const AiContent = () => {
 
   return (
     <Container>
-      <ContentHeader />
-      <DocumentHeader>
-        <EmptySpace />
-        <TableHeader>
-          <Button
-            text="표지 추가"
-            variant="uffia"
-            onClick={() => {
-              handleClickAddCover();
-            }}
-          />
-          <Button
-            text="내용 추가"
-            variant="secondary"
-            onClick={() => {
-              handleClickAddContent();
-            }}
-          />
-        </TableHeader>
-      </DocumentHeader>
-      <DocumentContent>
-        <DocumentInfo />
-        <TableContainer>
-          {coverData.map((item: any, index: number) => {
-            return (
-              <DocumentTable
-                key={index}
-                type={"cover"}
-                index={index}
-                tableData={item.tableData}
-                onClickDelete={() => handleClickDeleteCover(index)}
-                onClickAddRow={() => handleClickAddRowCover(index)}
-                onClickDeleteRow={(rowIndex: number) => {
-                  handleClickDeleteRowCover(index, rowIndex);
-                }}
-                updateData={(rowIndex: number, data: any) => {
-                  updateCoverData(index, rowIndex, data);
-                }}
-              />
-            );
-          })}
-          {contentData.map((item: any, index: number) => {
-            return (
-              <DocumentTable
-                key={index}
-                type={"content"}
-                index={index}
-                tableData={item.tableData}
-                onClickDelete={() => handleClickDeleteContent(index)}
-                onClickAddRow={() => handleClickAddRowContent(index)}
-                onClickDeleteRow={(rowIndex: number) => {
-                  handleClickDeleteRowContent(index, rowIndex);
-                }}
-                updateData={(rowIndex: number, data: any) => {
-                  updateContentData(index, rowIndex, data);
-                }}
-              />
-            );
-          })}
-          <ButtonContainer>
+      <ContentHeader
+        documentName={documentName}
+        onChangeDocumentName={(name: string) => {
+          setDocumentName(name);
+        }}
+      />
+      <Wrapper>
+        <DocumentHeader>
+          <EmptySpace />
+          <TableHeader>
             <Button
-              size={"large"}
+              text="표지 추가"
               variant="uffia"
-              text="저장하기"
-              onClick={saveData}
-              style={{
-                fontSize: "1rem",
-                padding: "0.5rem 4.5rem",
-              }}
-            />
-            {/* <CSVLink
-              data={[...coverData, ...contentData].map((data) => {
-                return data.tableData.map((row: any) => {
-                  return TableColumns.map((column) => {
-                    return row[column.key];
-                  });
-                });
-              })}
-              headers={TableColumns.map((column) => {
-                return {
-                  label: column.title,
-                  key: column.key,
-                };
-              })}
-              filename={"CSV 데이터"}
               onClick={() => {
-                console.log("링크 클릭함");
-              }}
-            >
-              Download me
-            </CSVLink> */}
-            <Button
-              size={"large"}
-              variant="primary"
-              text="추출하기"
-              onClick={exportData}
-              style={{
-                fontSize: "1rem",
-                padding: "0.5rem 4.5rem",
+                handleClickAddCover();
               }}
             />
-          </ButtonContainer>
-        </TableContainer>
-      </DocumentContent>
+            <Button
+              text="내용 추가"
+              variant="secondary"
+              onClick={() => {
+                handleClickAddContent();
+              }}
+            />
+          </TableHeader>
+        </DocumentHeader>
+        <DocumentContent>
+          <DocumentInfo />
+          <TableContainer>
+            {coverData.map((item: any, index: number) => {
+              return (
+                <DocumentTable
+                  key={index}
+                  type={"cover"}
+                  index={index}
+                  tableData={item.tableData}
+                  onClickDelete={() => handleClickDeleteCover(index)}
+                  onClickAddRow={() => handleClickAddRowCover(index)}
+                  onClickDeleteRow={(rowIndex: number) => {
+                    handleClickDeleteRowCover(index, rowIndex);
+                  }}
+                  updateData={(rowIndex: number, data: any) => {
+                    updateCoverData(index, rowIndex, data);
+                  }}
+                />
+              );
+            })}
+            {contentData.map((item: any, index: number) => {
+              return (
+                <DocumentTable
+                  key={index}
+                  type={"content"}
+                  index={index + coverData.length}
+                  tableData={item.tableData}
+                  onClickDelete={() => handleClickDeleteContent(index)}
+                  onClickAddRow={() => handleClickAddRowContent(index)}
+                  onClickDeleteRow={(rowIndex: number) => {
+                    handleClickDeleteRowContent(index, rowIndex);
+                  }}
+                  updateData={(rowIndex: number, data: any) => {
+                    updateContentData(index, rowIndex, data);
+                  }}
+                />
+              );
+            })}
+            <ButtonContainer>
+              <Button
+                size={"large"}
+                variant="uffia"
+                text="저장하기"
+                onClick={saveData}
+                style={{
+                  fontSize: "1rem",
+                  padding: "0.5rem 4.5rem",
+                }}
+              />
+              <Button
+                size={"large"}
+                variant="primary"
+                text="추출하기"
+                onClick={exportData}
+                style={{
+                  fontSize: "1rem",
+                  padding: "0.5rem 4.5rem",
+                }}
+              />
+            </ButtonContainer>
+          </TableContainer>
+        </DocumentContent>
+      </Wrapper>
     </Container>
   );
 };
@@ -442,4 +507,8 @@ const ButtonContainer = styled.div`
   justify-content: end;
   gap: 0.75rem;
   padding: 1.5rem 0;
+`;
+
+const Wrapper = styled.div`
+  margin: 0 auto;
 `;
